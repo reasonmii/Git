@@ -1,0 +1,309 @@
+※ Git Branch Docs
+https://git-scm.com/docs/git-branch
+
+▶ Branches are an essential part of Git!
+Think of branches as alternative timelines for a project.
+They enable us to create separate contexts where we can try new things,
+or even work on multiple ideas in parallel.
+If we make changes on one branch, they do not impact the other branches,
+unless we "merge" the changes.
+
+▶ The Master Branch
+In git, we are always working on a branch.
+The default branch name is "master".
+It doesn't do anything special or have fancy powers.
+It's just like any other branch.
+
+※ In 2020, Github renamed the default branch from master to "main".
+The default Git branch name is still master,
+though the Git team is exploring a potential change.
+
+▶ HEAD
+HEAD is simply a pointer that refers to the "current location" in your repository.
+It points to a particular "branch reference".
+It's like a bookmark.
+
+ex) commit 3a5c6c7889ce337e7c91a4d38ef281744474be1e (HEAD -> master)
+
+------------------------------------------------------------------------------------------
+
+$ cd desktop
+$ mkdir RoadtripPlaylist
+$ cd RoadtripPlaylist
+$ git init
+$ touch playlist.txt
+$ git add playlist.txt
+$ git commit -m "add playlist header"
+
+$ git add playlist.txt
+$ git commit -m "add two ABBA songs"
+
+------------------------------------------------------------------------------------------
+
+▶ View All Branches
+$ git branch
+result : * master
+-> We only have 'master' branch yet
+   * indicates current branch you are in
+
+------------------------------------------------------------------------------------------
+
+★ See 'playlist.txt' in Visual Studio Code to compare changes
+
+★ "Create Branches" just creates the branch
+It does not switch you to that branch (the HEAD stays the same)
+-> Thus you always should write "Create + Switch" to work in that brank
+
+▶ Create Branches : git branch <branch-name>
+$ git branch oldies
+$ git branch
+result : * master
+           oldies
+-> We've made a new branch called "oldies"
+   but we're still working on master
+
+▶ Switch Branches : git switch <branch-name>
+※ https://git-scm.com/docs/git-switch
+
+● Once you have created a new branch, you should point it
+$ git switch oldies
+$ git branch
+result :   master
+         * oldies
+-> * is moved to "oldies"
+
+$ git log
+result : commit 473918130ede9533e041af4d1433ac89aa1a96e7 (HEAD -> oldies, master)
+-> We can see "Head" is pointing "oldies" and "master"
+
+● Suppose we edited 'playlist.txt'
+$ git add playlist.txt
+$ git commit -m "add two George Jones songs"
+$ git log
+result : commit 0ffa947d9af016a99c23b0d03fb6612d7fc23bd6 (HEAD -> oldies)
+         Author: Yuna <cdyn17@gmail.com>
+         Date:   Sat Jul 24 09:47:57 2021 +0900
+            add two George Jones songs
+
+         commit 473918130ede9533e041af4d1433ac89aa1a96e7 (master)
+         Author: Yuna <cdyn17@gmail.com>
+         Date:   Sat Jul 24 09:39:33 2021 +0900
+            add two ABBA songs
+
+         commit 44342c78c7a9a0fa122fbac0a3605f662b3e1653
+         Author: Yuna <cdyn17@gmail.com>
+         Date:   Sat Jul 24 09:38:49 2021 +0900
+            add playlist header
+-> As we can see "HEAD" is now only pointing "oldies"
+   "(master)" is left behind
+
+● Let's switch to "master" branch again
+$ git switch master
+-> 'playlist.txt' file is the same as 'playlist.txt' file before edited
+
+$ git log
+result : commit 473918130ede9533e041af4d1433ac89aa1a96e7 (HEAD -> master)
+         Author: Yuna <cdyn17@gmail.com>
+         Date:   Sat Jul 24 09:39:33 2021 +0900
+           add two ABBA songs
+
+         commit 44342c78c7a9a0fa122fbac0a3605f662b3e1653
+         Author: Yuna <cdyn17@gmail.com>
+         Date:   Sat Jul 24 09:38:49 2021 +0900
+            add playlist header
+-> We only have two commits before branch "oldies" was added
+
+● Switch to "oldies" branch again
+$ git switch oldies
+-> 'playlist.txt' file is the same as 'playlist.txt' file after edited
+$ git log
+-> same result as git log for "oldies" before
+
+▶ Oneline Code for Creating & Switching : git switch -c <branch-name>
+$ git switch master
+$ git switch -c recentish-music
+result : Switched to a new branch 'recentish-music'
+
+------------------------------------------------------------------------------------------
+
+▶ Create and Compare Different Branches in Visual Studio Code
+
+● Edit : Add more songs to "playlist.txt"
+Below is oneline code to add and commit at once
+$ git commit -a -m "add two songs more"
+
+● Create new branch called "georges"
+$ git branch georges
+$ git log
+result : commit e8f30cdbb1cf6a4c9a887295c839acab3db4bbee (HEAD -> oldies, georges)
+
+$ git switch georges
+$ git log
+result : commit e8f30cdbb1cf6a4c9a887295c839acab3db4bbee (HEAD -> georges, oldies)
+
+● Edit : Add more songs to "playlist.txt"
+$ git commit -a -m "add more songs"
+$ git log
+result : commit a7b7424dc183a094b3160bffd916c9de933ba694 (HEAD -> georges)
+         Author: Yuna <cdyn17@gmail.com>
+         Date:   Sat Jul 24 10:10:47 2021 +0900
+            add more songs
+
+         commit e8f30cdbb1cf6a4c9a887295c839acab3db4bbee (oldies)
+         Author: Yuna <cdyn17@gmail.com>
+         Date:   Sat Jul 24 10:06:52 2021 +0900
+            add two songs more
+
+● Create new branch
+$ git switch master
+$ git branch emptyplaylist
+$ git switch emptyplaylist
+
+Delete all songs' list in "playlist.txt"
+$ git commit -a -m "delete all"
+
+● Compare 3 branches's results in Visual Studio Code
+$ git switch master
+$ git switch emptyplaylist
+$ git switch georges
+$ git switch oldies
+
+------------------------------------------------------------------------------------------
+
+▶ Another way of switching : git checkout <branch-name>
+※ https://git-scm.com/docs/git-checkout
+Historically, we used this way to switch branches.
+The "checkout" command does a million additional things,
+so the decision was made to add a standalone switch command which is much simpler.
+You will see older tutorials and docs using checkout rather than switch.
+Both now work.
+
+$ git checkout oldies
+result : Switched to branch 'oldies'
+
+▶ Oneline Code for Creating & Switching : git checkout -b <branch-name>
+$ git switch master
+$ git checkout -b newbranch
+result : Switched to a new branch 'newbranch'
+
+------------------------------------------------------------------------------------------
+
+▶ Swith Branches with Unstaged Changes -> Error
+
+$ git switch oldies
+
+Let's edit (add songs) to "playlist.txt"
+Try switch the branch
+
+$ git switch emptyplaylist
+result : error: Your local changes to the following files would be overwritten by checkout:
+                playlist.txt
+         Please commit your changes or stash them before you switch branches.
+         Aborting
+
+Thus, we should commit the changes before we move to other branches
+$ git add playlist.txt
+$ git commit -m "add one more disney"
+$ git switch emptyplaylist
+-> No more Error
+
+★ WARNING : sometimes, we can switch branches without committing.
+-> This is confusing.
+
+Suppose we create new branch called "chicken" and create new file "chicken.txt"
+$ git switch -c chicken
+$ touch chicken.txt
+$ git switch oldies
+result : Switched to branch 'oldies'
+-> No Error
+
+In Visual Studio Code, we can see "chicken.txt",
+even though we moved from "chicken" to "oldies" branch
+-> Unstage changes come with us
+
+$ git status
+result : On branch oldies
+         Untracked files:
+           (use "git add <file>..." to include in what will be committed)
+                 chicken.txt
+         nothing added to commit but untracked files present (use "git add" to track)
+
+------------------------------------------------------------------------------------------
+
+▶ Delete Branches
+1) git branch -d <branch-name>
+2) git branch -D <branch-name>
+3) git branch --delete <branch-name>
+
+● We can't delete the branch in that branch
+$ git switch -c deleteMe
+$ git branch -d deleteMe
+result : error: Cannot delete branch 'deleteMe' checked out at 'C:/Users/User/Desktop/RoadtripPlaylist'
+
+● We should use '-D' to let git know we are confident about deleting
+$ git switch master
+$ git branch -d deleteMe
+result : error: The branch 'deleteMe' is not fully merged.
+         If you are sure you want to delete it, run 'git branch -D deleteMe'.
+
+● No More Error
+$ git branch -D deleteMe
+Deleted branch deleteMe (was 12fcaa4).
+
+● Check git branch
+$ git branch
+result :  chicken
+          emptyplaylist
+          georges
+        * master
+          newbranch
+          oldies
+          recentish-music
+-> "deleteMe" is delted
+
+------------------------------------------------------------------------------------------
+
+▶ Rename Branches : git branch -m <new-branch-name>
+To rename you have to be in that branch
+
+$ git switch recentish-music
+$ git branch -m 2000s
+$ git branch
+result : * 2000s
+           chicken
+           emptyplaylist
+           georges
+           master
+           newbranch
+           oldies
+
+------------------------------------------------------------------------------------------
+
+▶ How Git Stores HEAD & Branches? (In the Real Folder)
+
+● Check code
+$ cd desktop/myFirstGit
+$ cd .git
+$ ls
+result : COMMIT_EDITMSG  config       hooks/  info/  objects/
+         HEAD            description  index   logs/  refs/
+$ cat HEAD
+result : ref: refs/heads/master
+
+● Check the branch you are pointing currently
+Open 'myFirstGit' folder - '.git' folder - 'HEAD' file
+Open the file using 'txt'
+result : ref: refs/heads/master
+
+● Check the branches you created
+Open 'myFirstGit' folder - '.git' folder - 'refs' folder - 'heads' folder
+-> You can see branches you created
+
+Open one of the files using 'txt'
+result : d2069bec0bfc1e685acd4a4b11d413245d3c9c15
+-> This is the hash value which is come out when you commit
+
+------------------------------------------------------------------------------------------
+
+▶ Branching Exercise
+※ https://www.notion.so/Branching-Exercise-b5460c881d56400cb046357d9a430bf8
