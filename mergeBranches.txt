@@ -1,0 +1,32 @@
+※ Git Merge Docs
+https://git-scm.com/docs/git-merge
+
+★ Remember these two Merging Concepts:
+1) We merge branches, not specific commits
+2) We always merge to the current HEAD branch
+
+▶ Basic Step to Merge
+1) Switch to or checkout the branch
+   you want to merge the changes into (the receiving branch)
+2) Use the "git merge" command to merge changes
+   from a specific branch into the current branch
+
+------------------------------------------------------------------------------------------
+
+▶ Fast Forward Merge
+Master simply caught up on the commits from the other branch
+
+$ cd Patronus
+$ git branch -v
+result : * harry  7a2be88 add harry's stag patronus
+           lily   1a51cd0 add lily's doe patronus
+           master ae321a1 add empty patronus file
+$ git switch master
+$ git merge harry
+result : Updating ae321a1..7a2be88
+         Fast-forward
+          patronus.txt | 26 ++++++++++++++++++++++++++
+          1 file changed, 26 insertions(+)
+
+
+
