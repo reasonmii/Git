@@ -45,6 +45,15 @@ $ git branch
 result : * master
 -> We only have 'master' branch yet
    * indicates current branch you are in
+   
+$ git branch -v
+result : * 2000s         31e854b changes again
+           chicken       263d626 delete all
+           emptyplaylist 263d626 delete all
+           georges       7bb7d50 remove two ABBA songs
+           master        31e854b changes again
+           newbranch     31e854b changes again
+           oldies        12fcaa4 add one more disney
 
 ------------------------------------------------------------------------------------------
 
