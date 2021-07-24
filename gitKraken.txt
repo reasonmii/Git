@@ -1,0 +1,29 @@
+▶ Installing GitKraken : https://www.gitkraken.com/
+Help us visualize what's happening (All the history)
+Visualize the log of all activities
+
+※ GitKraken Git GUI Cheat Sheet
+
+------------------------------------------------------------------------------------------
+
+Open gitKraken
+Click 'Open a repo' - 'Open a Repository' - Click your folder ex) 'myFirstGit'
+Now we can see our commit history of the repository
+
+When you change or edit something, 
+you can see on the right side, saying "7 files changes on master"
+- pencil icon : edited
+- - icon : deleted
+- + icon : created
+
+Click one file and click "Stage File"
+-> same as "$ git add file.format"
+   Check in git bash "$ git status"
+
+Wirte Commit Message -> Click "Commit changes to 1 file"
+-> Check in git bash "$ git status"
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+
