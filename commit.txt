@@ -1,0 +1,311 @@
+It's not the same as 'Save the file'
+It's more like 'Checkpoint' or 'Snapshot' of changes in repository
+ex) If there are 7 changes, we can commit after 3 changes and after 4 more changes
+    So that we can group the changes and go back to those point whenever we want
+
+※ Git Reference
+https://git-scm.com/docs
+
+------------------------------------------------------------------------------------------
+
+★ The Basic Git Workflow
+1) Work on stuff - Working Directory : Make new files, edit files, delete files, etc
+2) Add Changes - Staging Area : Group specific changes together, in preparation of committing
+3) Commit - Repository : Commit everything that was previously added
+
+------------------------------------------------------------------------------------------
+
+▶ Work on stuff : Create two new files
+$ cd desktop
+$ cd myFirstGit
+$ touch outline.txt
+$ touch characters.txt
+$ git status
+result : On branch master
+         No commits yet
+         Untracked files:
+            (use "git add <file>..." to include in what will be committed)
+               characters.txt
+               outline.txt
+         nothing added to commit but untracked files present (use "git add" to track)
+
+------------------------------------------------------------------------------------------
+
+▶ Git-Add command
+※ https://git-scm.com/docs/git-add
+It's a way of telling Git, "please include this change in our next commit"
+
+Add two files
+Let's say we want to group the process of creating two files (for checkpoint)
+$ git add characters.txt
+$ git status
+result : On branch master
+         No commits yet
+         Changes to be committed:
+           (use "git rm --cached <file>..." to unstage)
+                 new file:   characters.txt
+         Untracked files:
+           (use "git add <file>..." to include in what will be committed)
+                 outline.txt
+$ git add outline.txt
+$ git status
+result : On branch master
+         No commits yet
+         Changes to be committed:
+           (use "git rm --cached <file>..." to unstage)
+                 new file:   characters.txt
+                 new file:   outline.txt
+
+★ Stage all changes at once
+$ git add .
+
+------------------------------------------------------------------------------------------
+
+▶ Git Commit
+※ https://git-scm.com/docs/git-commit
+We use the git commit command to actually commit changes from the staging area
+When making a commit, we need to provide "a commit message"
+that describes or "summarizes the changes" and work snapshotted in the commit
+
+$ git commit -m "my message"
+result : [master (root-commit) 37d1bdd] my message
+          2 files changed, 3 insertions(+)
+          create mode 100644 characters.txt
+          create mode 100644 outline.txt
+$ git status
+result : On branch master
+         nothing to commit, working tree clean
+
+★ Any single change would put the file into the "Untracked files:" part of "$ git status"
+
+$ git commit -a -m "my message"
+★ oneline way adding all unstaged changes
+   -> Don't have to write "add + commit"
+
+------------------------------------------------------------------------------------------
+
+▶ Commit without Messages : git commit
+★ "git commit" without message is not recommended
+What happens if you don't write message, but just "git commit"?
+1) It opens VIM, saying "enter the commit message"
+2) Type "I" : Insert mode
+3) Write messages
+4) Click "Esc" : Leave insert mode
+5) Type ":wq" : write quit
+-> In other words, you eventually have to write, and it takes more time
+
+------------------------------------------------------------------------------------------
+
+▶ Configuring Git's Default Editor
+
+Let's say you are editing all files using visual studio code
+How to add default editor (Visual Studio Code) to Git?
+$ git config --global core.editor "code --wait"
+※ https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config
+
+If you don't close the file in Visual Studio Code and write
+$ git commit -m "message"
+result : hint: Waiting for your editor to close the file...
+
+In Visual Studio Code "COMMIT_EDITMSG" pops up
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Changes to be committed:
+#	modified:   characters.txt
+#
+
+Save and close the file in Visual Studio Code
+result : hint: Waiting for your editor to close the file...
+         error: There was a problem with the editor 'code --wait'.
+         Please supply the message using either -m or -F option.
+
+------------------------------------------------------------------------------------------
+
+▶ Commit Messages
+Git document officially recommends 'Present-Tense Imperative Style'
+ex) (bad) "makes x do y" / "I made x do y" -> (good) "make x do y"
+
+※ Blog Post On Git Commit Tense
+1) https://medium.com/@corrodedlotus/which-tense-should-be-used-on-a-git-commit-message-121cb641134b
+2) https://www.danclarke.com/git-tense
+
+※ Quora Discussion On Commit Tense
+https://www.quora.com/Which-tense-should-be-used-in-a-git-commit-message-past-present-and-why
+
+※ Stack Overflow Post
+https://stackoverflow.com/questions/3580013/should-i-use-past-or-present-tense-in-git-commit-messages
+
+------------------------------------------------------------------------------------------
+
+▶ Atomic Commits
+When possible, a commit should encompass a single feature, changes or fix
+Try to keep each commit focused on a single thing
+This makes it much easier to undo or rollback changes later on
+It also makes your code or project easier to review
+
+Create 'myFirstGit' folder, and some txt files
+$ cd desktop
+$ mkdir myFirstGit
+$ cd myFirstGit
+$ git init
+$ git add chapter1.txt chapter2.txt characters.txt outline.txt
+$ git status
+$ git commit -m "create files"
+
+Create 'MoodBoard' subfolder, and some jpg files
+$ mkdir MoodBoard
+$ cd MoodBoard
+$ touch mura1.jpg rolls.jpg woman.jpg
+$ cd ..
+$ git status
+result : On branch master
+         Untracked files:
+           (use "git add <file>..." to include in what will be committed)
+                 MoodBoard/
+         nothing added to commit but untracked files present (use "git add" to track)
+
+Add all the changes about 'MoodBoard' folder
+$ git add MoodBoard/
+$ git commit -m "create mood board"
+
+------------------------------------------------------------------------------------------
+
+▶ Git log
+※ https://git-scm.com/docs/git-log
+Retrieves information, a log of the commits for a given repository
+
+$ git log
+result : commit 3a5c6c7889ce337e7c91a4d38ef281744474be1e (HEAD -> master)
+         Author: Yuna <cdyn17@gmail.com>
+         Date:   Sat Jul 24 07:55:13 2021 +0900
+            add more contents about toystory
+        
+         commit 34417b29b667f3c45dc98f905cf754c6ab91cf43
+         Author: Yuna <cdyn17@gmail.com>
+         Date:   Sat Jul 24 07:54:52 2021 +0900
+            add contents
+
+         commit 1de18f2e604be12d582406aa79a5864d9a2ff3ef
+         Author: Yuna <cdyn17@gmail.com>
+         Date:   Sat Jul 24 07:34:01 2021 +0900
+            create mood board
+
+$ git log --abbrev-commit
+result : commit 3a5c6c7 (HEAD -> master)
+         Author: Yuna <cdyn17@gmail.com>
+         Date:   Sat Jul 24 07:55:13 2021 +0900
+            add more contents about toystory
+
+         commit 34417b2
+         Author: Yuna <cdyn17@gmail.com>
+         Date:   Sat Jul 24 07:54:52 2021 +0900
+            add contents
+
+         commit 1de18f2
+         Author: Yuna <cdyn17@gmail.com>
+         Date:   Sat Jul 24 07:34:01 2021 +0900
+            create mood board
+
+★ --oneline : A shorthand for "--pretty=oneline --abbrev-commit" used together
+So it's nice and simple to look at our history
+$ git log --oneline
+result : 3a5c6c7 (HEAD -> master) add more contents about toystory
+         34417b2 add contents
+         1de18f2 create mood board
+
+------------------------------------------------------------------------------------------
+
+▶ Amending Commits
+Suppose you just made a commit and then realized you forgot to include a file
+Or you made a typo in the commit message
+
+ex) You made a commit without adding "outline.txt" file
+$ git add outline.txt
+$ git commit --amend
+It opens up your default editor (visual studio code)
+And it opens up your previous commit message
+-> You can see that 'outline.txt' file is added
+   You also can change commit message
+-> Exit
+result : hint: Waiting for your editor to close the file...
+         [master d2069be] add headings to all files
+          Date: Sat Jul 24 08:35:07 2021 +0900
+          4 files changed, 7 insertions(+), 2 deletions(-)
+
+------------------------------------------------------------------------------------------
+★★★ 수정필요 : 39번째 강의 npm이 안됨
+
+▶ Git Ignore
+※ https://git-scm.com/docs/gitignore
+※ https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+This is useful for files you NEVER want to commit, including:
+- Secrets, API keys, credentials, etc.
+- Operating System files (.DS_Store on Mac)
+- Log files
+- Dependencies & packages
+
+.gitignore
+Create a file called '.gitignore' in the root of a repository
+Inside the file, we can write patterns to tell Git which files & folders to ignore:
+- .DS_Store will ignore files named .DS_Store
+- folderName/ will ignore on entire directory
+- *.log will ignore any files with the .log extension
+
+※ gitignore.io
+https://www.toptal.com/developers/gitignore
+Search 'python' - You can just copy and paste them
+
+Check '.gitignore' folder
+ex1) Faker Github Repo : https://github.com/marak/Faker.js/
+ex2) Tensorflow Github Repo : https://github.com/tensorflow/tensorflow
+ex3) Signal Github Repo : https://github.com/signalapp/Signal-Android
+
+$ touch .gitignore
+
+Open '.gitignore' in Visual Studio Code
+Write things as below:
+.DS_Store
+secrets.txt
+node_modules/
+-> This means ignore thos files or folders' change
+
+$ git add .
+$ git commit -m "add gitignore file" 
+
+Now let's edit "secrets.txt"
+$ git status
+result : On branch master
+         nothing to commit, working tree clean
+-> It ignores changes
+
+------------------------------------------------------------------------------------------
+
+▶ Committing Basics Exercise
+※ https://www.notion.so/Committing-Basics-Exercise-3dc1ef1873ce45e68cedd2265710d7d8
+
+$ cd desktop
+$ mkdir Shopping
+$ cd Shopping
+$ git status
+
+$ git init
+$ touch yard.txt
+$ touch groceries.txt
+$ git status
+
+$ git add groceries.txt yard.txt
+$ git commit -m "create yard and groceries lists"
+$ git status
+
+$ git add groceries.txt
+$ git commit -m "add ingredients for tomato soup"
+$ git add yard.txt
+$ git commit -m "add items needed for garden box"
+$ git status
+
+$ git add .
+$ git commit -m "add items needed to grow potatoes"
+$ git status
+
