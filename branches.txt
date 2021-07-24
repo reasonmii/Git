@@ -307,3 +307,42 @@ result : d2069bec0bfc1e685acd4a4b11d413245d3c9c15
 
 ▶ Branching Exercise
 ※ https://www.notion.so/Branching-Exercise-b5460c881d56400cb046357d9a430bf8
+
+$ cd desktop
+$ mkdir Patronus
+$ cd Patronus
+$ git init
+
+$ touch patronus.txt
+$ git add patronus.txt
+$ git commit -m "add empty patronus file"
+
+$ git branch harry
+$ git branch snape
+$ git switch harry
+
+$ code .
+$ git add patronus.txt
+$ git commit -m "add harry's stag patronus"
+
+$ git switch snape
+$ git add patronus.txt
+$ git commit -m "add snape's doe patronus"
+
+$ git switch -c lily
+$ git add patronus.txt
+$ git commit -m "add lily's doe patronus"
+
+$ git branch
+result :  harry
+        * lily
+          master
+          snape
+
+$ git switch master
+$ git branch -D snape
+$ git branch
+result :  harry
+          lily
+        * master
+
