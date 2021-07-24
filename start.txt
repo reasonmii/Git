@@ -1,0 +1,109 @@
+▶ Installing Git : Terminal vs. GUIs
+built-in GUI tools : https://git-scm.com/downloads/guis
+
+------------------------------------------------------------------------------------------
+
+▶ WINDOWS Git Installation
+1) Git Downloading Package : https://git-scm.com/download/win
+   ※ use Visual Studio Code as Git's default editor
+2) Visual Studio Code : https://code.visualstudio.com/
+
+Check 'Git Bash' installation
+※ MAC Git Installation : https://sourceforge.net/projects/git-osx-installer/
+
+------------------------------------------------------------------------------------------
+
+▶ Configuring Your Git Name & Email
+
+$ git config --global user.name "Yuna"
+$ git config user.name
+result : Yuna
+
+$ git config --global user.email "cdyn17@gmail.com"
+$ git config user.email
+result : cdyn17@gmail.com
+
+------------------------------------------------------------------------------------------
+
+▶ Essential Terminal Commands
+1) ls : list the contents of the directory
+   ※ ls -a : list all contents including the hidden contents (hidden files has . in front of its name)
+2) start . : pop the directory (※ mac : open .)
+3) ls folderName : list the contents of that subdirectory
+4) start folderName : pop that subdirectory
+5) pwd : current working directory
+6) cd folderName : change directory
+7) cd .. : go back to the uppder directory
+8) clear : clear the codes (keep history)
+
+Create Files : touch filename.format
+- touch purple.txt
+- touch yellow.js
+- touch green.py
+- touch orange.pdf
+- touch source/rocky.png : create the file in 'source' folder
+
+Create Folders : mkdir foldername
+- mkdir turtles
+- mkdir turtlesBlue turtlesYellow : create two folders
+- mkdir "turtles Blue" : not recommended way (no space for name)
+- mkdir turtles_blue
+
+Delete Files : rm filename.format
+★ This deletes the file forever (no trash can)
+※ If you track it with git, you can restore it
+- rm purple.txt
+- rm yellow.js
+- rm green.py
+- rm orange.pdf
+- rm source/rocky.png : remove the file in 'source' folder
+
+Delete Folders : rm -rf foldername
+★ This deletes the folder forever (no trash can)
+- rm -rf turtles
+- rm -rf turtlesBlue turtlesYellow : delete two folders
+- rm -rf "turtles Blue"
+- rm -rf turtles_blue
+
+------------------------------------------------------------------------------------------
+
+▶ Our First Git Command
+※ Git Init Docs : https://git-scm.com/docs/git-init
+※ Git Status Docs : https://git-scm.com/docs/git-status
+
+One Project needs One Repository!
+-> So, we initialize new repository only one time for one project
+
+Initialize new Git repository
+$ cd desktop
+$ mkdir myFirstGit
+$ cd myFirstGit
+$ git init
+result : Initialized empty Git repository in C:/Users/User/Desktop/myFirstGit/.git/
+
+Check Git repository
+If we see 'myFirstGit' folder, we can't see anything
+But if we use 'ls -a' command, we can find hidden git file
+$ ls -a
+result : ./  ../  .git/
+
+$ git status
+result : On branch master
+         No commits yet
+         nothing to commit (create/copy files and use "git add" to track)
+
+Delete the entire git history for the project
+$ rm -rf .git
+
+Check whether the Git repository is gone
+$ git status
+result : fatal: not a git repository (or any of the parent directories): .git
+
+------------------------------------------------------------------------------------------
+
+▶ Common Issues
+★ WARNING! DO NOT INIT A REPOSITORY INSIDE OF A REPOSITORY
+Keep your repositories separately
+When you write 'git init', make sure you're not in a repository
+It would be helpful if you make a folder for a project
+
