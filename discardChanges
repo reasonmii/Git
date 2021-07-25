@@ -1,0 +1,46 @@
+▶ Discarding Changes
+Suppose you've made some changes to a file but don't want to keep them
+To revert the file back to whatever it looked like when you last committed
+you can use the commands below to discard any changes in that file,
+reverting back to the HEAD
+
+1) git checkout HEAD <filename>
+2) git checkout -- <file>
+
+$ cd desktop
+$ mkdir animal
+$ cd animal
+$ git init
+$ touch cat.txt dog.txt
+$ git commit -m "add cat and dog files"
+
+● Edit 'cat.txt' and 'dog.txt' files 3 times and commit each time
+$ git add .
+$ git commit -m "first commit"
+$ git add .
+$ git commit -m "second commit"
+$ git commit -am "third commit"
+
+$ git status
+result : On branch master
+         Changes not staged for commit:
+           (use "git add <file>..." to update what will be committed)
+           (use "git restore <file>..." to discard changes in working directory)
+                 modified:   cat.txt
+                 modified:   dog.txt
+         no changes added to commit (use "git add" and/or "git commit -a")
+
+● Edit 'cat.txt' and 'dog.txt' files and no commit yet
+  Suppose you want to go back before editing
+$ git checkout HEAD dog.txt
+$ git checkout HEAD cat.txt
+
+● Another code to discard changes
+$ git checkout -- cat.txt dog.txt
+
+$ git log --oneline
+result : 0f1469a (HEAD -> master) third commit
+         9f77adf second commit
+         5dec360 first commit
+-> We are in the last commit before being edited
+
