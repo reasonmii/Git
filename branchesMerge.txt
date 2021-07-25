@@ -1,0 +1,86 @@
+※ Git Merge Docs
+https://git-scm.com/docs/git-merge
+
+★ Use "GitKraken" to visualize the branches
+
+★ Remember these two Merging Concepts:
+1) We merge branches, not specific commits
+2) We always merge to the current HEAD branch
+
+▶ Basic Step to Merge
+1) Switch to or checkout the branch
+   you want to merge the changes into (the receiving branch)
+2) Use the "git merge" command to merge changes
+   from a specific branch into the current branch
+
+------------------------------------------------------------------------------------------
+
+▶ Fast Forward Merge
+Master simply caught up on the commits from the other branch
+
+$ cd Patronus
+$ git branch -v
+result : * harry  7a2be88 add harry's stag patronus
+           lily   1a51cd0 add lily's doe patronus
+           master ae321a1 add empty patronus file
+$ git switch master
+$ git merge harry
+result : Updating ae321a1..7a2be88
+         Fast-forward
+          patronus.txt | 26 ++++++++++++++++++++++++++
+          1 file changed, 26 insertions(+)
+
+------------------------------------------------------------------------------------------
+
+▶ Non Fast Forward Merge : git merge <branch-Name>
+
+★ Not All Merges are Fast Forwards!
+Imagine one of your teammates merged in a new feature or change to master
+while you were working on a branch which is from a previous master version
+In such a case, rather than performing a simple fast forward, git performs a "merge commit"
+
+Create new repository and file 'songs.txt'
+$ cd desktop
+$ mkdir PlaylistTake2
+$ cd PlaylistTake2
+$ git init
+$ touch songs.txt
+$ git add songs.txt
+$ git commit -m "add songs file"
+
+Add some songs to 'songs.txt'
+$ git add songs.txt
+$ git commit -m "add 2 ABBA songs"
+
+Create new branch
+$ git branch ABBA
+$ git switch ABBA
+
+Add some songs to 'songs.txt'
+$ git commit -a -m "add Mammamia"
+
+Add some songs to 'songs.txt'
+$ git commit -a -m "add dancing queen"
+
+Go back to master branch
+$ git switch master
+
+Create new file 'podcasts.txt'
+$ touch podcasts.txt
+$ git add podcasts.txt
+$ git commit -m "add podcasts file"
+-> Now master branch has new file
+   which ABBA branch does not know about
+
+Add some radio program to 'podcasts.txt'
+$ git add podcasts.txt
+$ git commit -m "add 3 podcasts"
+
+$ git merge ABBA
+result : hint: Waiting for your editor to close the file...
+-> It opens visual studio code
+-> Just close the file
+-> Check 'GitKraken' whether master and ABBA branches are merged
+
+------------------------------------------------------------------------------------------
+
