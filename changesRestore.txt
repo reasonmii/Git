@@ -110,4 +110,74 @@ result : On branch master
                  secret.txt
 
 $ git commit -m "four commit"
+$ rm secret.txt
+
+------------------------------------------------------------------------------------------
+
+▶ Git Reset : git reset <commit-hash>
+Suppose you've just made a couple of commits on the master branch,
+but you actually meant to make them on a separate branch instead
+To "undo those commits", you can use "git reset"
+It will reset the repo back to a specific commit
+The commits after are gone
+
+● Edit 'cat.txt' and 'dog.txt' files and commit
+$ git add .
+$ git commit -m "mistake commit"
+
+● Edit 'cat.txt' and 'dog.txt' files and commit
+$ git add .
+$ git commit -m "another bad commit"
+$ git log --oneline
+result : 3b6d0b3 (HEAD -> master) another bad commit
+         4d35642 mistake commit
+         18db2a4 four commit
+         0f1469a third commit
+         9f77adf second commit
+         5dec360 first commit
+
+● Go back to a specific commit
+$ git reset 18db2a4
+result : Unstaged changes after reset:
+         M       cat.txt
+         M       dog.txt
+
+-> Edited file is not changed (keep changes)
+   But, those changes now are in working directory, not in commit
+   ★ You don't lose that work, but lose that commit
+
+● Take those changes to new branch
+$ git switch -c badstuff
+$ git add .
+$ git commit -m "add bad stuff"
+ 
+$ git switch master
+
+------------------------------------------------------------------------------------------
+
+▶ Reset --hard : git reset --hard <commit>
+Use the "--hard option" to undo both the commits AND the actual changes in your files
+ex) "git reset --hard HEAD~1" will delete the last commit and associated changes
+
+● Edit 'cat.txt' and 'dog.txt' files and commit
+$ git add .
+$ git commit -m "undo this commit please"
+$ git log --oneline
+result : ea4a991 (HEAD -> master) undo this commit please
+         18db2a4 four commit
+         0f1469a third commit
+         9f77adf second commit
+         5dec360 first commit
+
+$ git reset --hard 0f1469a
+$ git log --oneline
+result : 0f1469a (HEAD -> master) third commit
+         9f77adf second commit
+         5dec360 first commit
+
+------------------------------------------------------------------------------------------
+
+
+
+
 
