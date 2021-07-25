@@ -1,0 +1,49 @@
+▶ Refer Previous Commits : git checkout HEAD~(number)
+git checkout supports referencing previous commits
+relative to a particular commit
+ex1) HEAD~1 refers to the commit before HEAD (parent)
+ex2) HEAD~2 refers to 2 commits before HEAD (grandparent)
+※ This is not essential
+
+$ git log --oneline
+result : 061ecf0 (HEAD -> master) final
+         d2069be (oldies) add headings to all files
+         d392685 edit more
+         b34bdbd add two new photo
+         8c36d0f delete all png files
+         6180ec9 add buzz and woody
+         3a5c6c7 add more contents about toystory
+         34417b2 add contents
+         1de18f2 create mood board
+         f4fc729 create files
+
+$ git checkout HEAD~1
+-> Head is pointing the previous commit
+   Check it in 'GitKraken'
+
+$ git checkout HEAD~1
+result : Previous HEAD position was d2069be add headings to all files
+         HEAD is now at d392685 edit more
+
+------------------------------------------------------------------------------------------
+
+▶ Go back to the original HEAD
+
+Method1) Use branch name
+$ git switch master
+
+Method2) git switch -
+It brings you to the HEAD right before you do 'checkout'
+
+$ git switch -
+result : Previous HEAD position was 1de18f2 create mood board
+         Switched to branch 'master'
+
+$ git switch oldies
+$ gti checkout HEAD~1
+$ git checkout HEAD~1
+
+$ git switch -
+result : Previous HEAD position was d392685 edit more
+         Switched to branch 'oldies'
+
