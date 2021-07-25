@@ -1,0 +1,327 @@
+※ Git Stash Docs
+https://git-scm.com/docs/git-stash
+
+Suppose we go to the different branch and edit some files.
+When we try to go to the other branch without committing those changes
+there would be 2 scenarios.
+1) Our changes come with us to the destination branch
+2) Git won't let us switch if it detects potential conflicts
+   -> This is the time to use "git stash"
+
+▶ Stashing
+Git provides an easy way of stashing these uncommitted changes
+so that we can return to them later, without having to make unnecessary commits
+
+▶ Git Stash
+"git stash" is super useful command that helps you save changes
+that you are not yet ready to commit.
+You can stash changes and then come back to them later.
+Running git stash will take all uncommitted changes (staged and unstaged)
+and stash them, reverting the changes in your working copy.
+
+------------------------------------------------------------------------------------------
+
+$ cd desktop
+$ mkdir Stashing
+$ cd Stashing
+$ git init
+$ touch index.html app.css
+
+$ git status
+result : On branch master
+         No commits yet
+         Untracked files:
+           (use "git add <file>..." to include in what will be committed)
+                 app.css
+                 index.html
+         nothing added to commit but untracked files present (use "git add" to track)
+
+$ git add .
+$ git commit -m "create index.html and app.css"
+
+------------------------------------------------------------------------------------------
+
+▶ First Scenario
+Our changes come with us to the destination branch
+
+● Create new branch and edit 'app.css' file
+$ git switch -c purple
+$ git status
+result : On branch purple
+         Changes not staged for commit:
+           (use "git add <file>..." to update what will be committed)
+           (use "git restore <file>..." to discard changes in working directory)
+                 modified:   app.css
+         no changes added to commit (use "git add" and/or "git commit -a")
+
+● Go to 'master' branch without committing
+$ git switch master
+result : Switched to branch 'master'
+         M       app.css
+
+★ Even though we edited 'app.css' file,
+we can switch to 'master' branch without warning
+Changes come with us
+
+$ git status
+result : On branch master
+         Changes not staged for commit:
+           (use "git add <file>..." to update what will be committed)
+           (use "git restore <file>..." to discard changes in working directory)
+                 modified:   app.css
+         no changes added to commit (use "git add" and/or "git commit -a")
+
+● How we can commit this?
+Go back to 'purple' branch and commit
+$ git switch purple
+$ git add .
+$ git commit -m "make stuff purple"
+$ git switch master
+
+------------------------------------------------------------------------------------------
+
+▶ Second Scenario
+Git won't let us switch if it detects potential conflicts
+
+● Create new branch
+$ git switch -c goodbye
+
+● Go to 'master' branch and edit 'index.html' file
+$ git switch master
+$ git add .
+$ git commit -m "update hello greeting"
+
+● Go to 'goodbye' branch and edit both 'index.html' and 'app.css' files
+$ git switch goodbye
+$ git status
+result : On branch goodbye
+         Changes not staged for commit:
+           (use "git add <file>..." to update what will be committed)
+           (use "git restore <file>..." to discard changes in working directory)
+                modified:   index.html
+         no changes added to commit (use "git add" and/or "git commit -a")
+
+● Go to 'master' branch -> ERROR!
+$ git switch master
+result : error: Your local changes to the following files would be overwritten by checkout:
+                 index.html
+         Please commit your changes or stash them before you switch branches.
+         Aborting
+
+------------------------------------------------------------------------------------------
+
+▶ Git Stash
+Use when you want to go to 'master' branch without committing
+even though there's an error as above
+
+1) git status
+2) git status save
+
+$ git status
+result : On branch goodbye
+         Changes not staged for commit:
+           (use "git add <file>..." to update what will be committed)
+           (use "git restore <file>..." to discard changes in working directory)
+                 modified:   app.css
+                 modified:   index.html
+         no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git stash
+result : Saved working directory and index state WIP on goodbye: ab87e24 final
+
+$ git status
+result : On branch goodbye
+         nothing to commit, working tree clean
+-> If you check the files in VSCode,
+   both 'index.html' and 'app.css' files are back to files
+   before edited
+   (The changes we did are not here anymore)
+
+$ git switch master
+result : Switched to branch 'master'
+-> Now we can go any other branches without error
+
+------------------------------------------------------------------------------------------
+
+▶ Git Stash Pop
+Use "git stash pop" to remove the most recently stashed changes in your stash
+and re-apply them to your working copy
+
+$ git switch goodbye
+$ git stash pop
+result : On branch goodbye
+         Changes not staged for commit:
+           (use "git add <file>..." to update what will be committed)
+           (use "git restore <file>..." to discard changes in working directory)
+                 modified:   app.css
+                 modified:   index.html
+         no changes added to commit (use "git add" and/or "git commit -a")
+         Dropped refs/stash@{0} (ddef34443ba68d55b469493593b1605a2738d138)
+-> If you check the files in VSCode, changes you did come back
+
+------------------------------------------------------------------------------------------
+
+▶ Git Stash Apply
+Use "git stash apply" to apply whatever is stashed away,
+without removing it from the stash
+This can be useful if you want to apply stashed changes to multiple branches
+
+● Stash 'goodbye' branch, to go to other branches without committing
+$ git status
+result : On branch goodbye
+         Changes not staged for commit:
+           (use "git add <file>..." to update what will be committed)
+           (use "git restore <file>..." to discard changes in working directory)
+                 modified:   app.css
+                 modified:   index.html
+         no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git stash
+result: Saved working directory and index state WIP on goodbye: ab87e24 final
+
+$ git status
+result : On branch goodbye
+         nothing to commit, working tree clean
+
+● Apply 'goodbye' branch's changes to 'master branch -> CONFLICT!
+$ git switch master
+$ git stash apply
+result : Auto-merging index.html
+         CONFLICT (content): Merge conflict in index.html
+-> Click 'Accept Incoming Change' in VSCode
+
+$ git status
+$ git add .
+$ git commit -m "Apply stashed changes"
+
+● Go back to 'goodbye' branch
+$ git switch goodbye
+$ git stash apply
+-> Apply the changes of 'goodbye' branch
+
+$ git add .
+$ git commit -m "apply stashed"
+
+------------------------------------------------------------------------------------------
+
+▶ Stashing Multiple Times : git stash list
+You can add multiple stashes onto the stack of stashes
+They will all be stashed in the order you added them
+
+● Create new branch
+$ git switch -c rainbow
+
+● Edit 'app.css' file in 'rainbow' branch
+$ git add app.css
+$ git commit -m "remove background color"
+
+● Edit 'app.css' file in 'rainbow' branch
+$ git stash
+result : Saved working directory and index state WIP on rainbow: cb45e95 remove background color
+
+● Edit 'app.css' file in 'rainbow' branch
+$ git stash
+result : Saved working directory and index state WIP on rainbow: cb45e95 remove background color
+
+● Edit 'app.css' file in 'rainbow' branch
+$ git stash
+result : Saved working directory and index state WIP on rainbow: cb45e95 remove background color
+
+● List all 'stash'
+$ git stash list
+stash@{0}: WIP on rainbow: cb45e95 remove background color
+stash@{1}: WIP on rainbow: cb45e95 remove background color
+stash@{2}: WIP on rainbow: cb45e95 remove background color
+stash@{3}: WIP on goodbye: ab87e24 final
+
+------------------------------------------------------------------------------------------
+
+▶ Applying Specific Stashes
+git assumes you want to apply the most recent stash when you run git stash apply,
+but you can also specify a particular stash like "git stash apply stash@{2}"
+
+$ git status
+result : On branch rainbow
+         nothing to commit, working tree clean
+
+● Apply stash@{1}
+$ git stash apply stash@{2}
+result : On branch rainbow
+         Changes not staged for commit:
+           (use "git add <file>..." to update what will be committed)
+           (use "git restore <file>..." to discard changes in working directory)
+                 modified:   app.css
+         no changes added to commit (use "git add" and/or "git commit -a")
+
+● Apply stash@{1}
+$ git stash apply stash@{1}
+result : error: Your local changes to the following files would be overwritten by merge:
+                 app.css
+         Please commit your changes or stash them before you merge.
+         Aborting
+-> Go to VSCode and change "app.css" file to the status before applying stash@{2}
+
+● Try again
+$ git stash apply stash@{1}
+result : On branch rainbow
+         Changes not staged for commit:
+           (use "git add <file>..." to update what will be committed)
+           (use "git restore <file>..." to discard changes in working directory)
+                 modified:   app.css
+         no changes added to commit (use "git add" and/or "git commit -a")
+
+------------------------------------------------------------------------------------------
+
+▶ Dropping and Clearing The Stash
+To delete a particular stash, you can use git stash drop <stash-id>
+To clear out all stashes, run git stash clear
+
+$ git stash list
+result : stash@{0}: WIP on rainbow: cb45e95 remove background color
+         stash@{1}: WIP on rainbow: cb45e95 remove background color
+         stash@{2}: WIP on rainbow: cb45e95 remove background color
+         stash@{3}: WIP on goodbye: ab87e24 final
+
+$ git stash drop stash@{0}
+result : Dropped stash@{0} (bdce8f5205b8c5a3d0e295288c9d652383d83d8b)
+
+$ git stash list
+result : stash@{0}: WIP on rainbow: cb45e95 remove background color
+         stash@{1}: WIP on rainbow: cb45e95 remove background color
+         stash@{2}: WIP on goodbye: ab87e24 final
+
+$ git stash clear
+$ git stash list
+result : nothing
+
+------------------------------------------------------------------------------------------
+
+▶ Stashing Basic Exercise
+※ https://www.notion.so/Stashing-Exercise-b6b4ac460c0a4798845de177fc1eb86d
+
+
+$ cd desktop
+$ mkdir diary
+$ cd diary
+$ git init
+
+$ touch diary.txt
+$ git add .
+$ git commit -m "create diary.txt"
+
+$ git branch the-truth
+$ git switch the-truth
+$ git branch
+result :   master
+         * the-truth
+
+$ git switch master
+$ git stash
+
+$ git add .
+$ git commit -m "lies"
+
+$ git switch the-truth
+$ git stash pop
+$ git commit -am "truth"
+
