@@ -39,7 +39,7 @@ Imagine one of your teammates merged in a new feature or change to master
 while you were working on a branch which is from a previous master version
 In such a case, rather than performing a simple fast forward, git performs a "merge commit"
 
-Create new repository and file 'songs.txt'
+● Create new repository and file 'songs.txt'
 $ cd desktop
 $ mkdir PlaylistTake2
 $ cd PlaylistTake2
@@ -48,34 +48,35 @@ $ touch songs.txt
 $ git add songs.txt
 $ git commit -m "add songs file"
 
-Add some songs to 'songs.txt'
+● Add some songs to 'songs.txt'
 $ git add songs.txt
 $ git commit -m "add 2 ABBA songs"
 
-Create new branch
+● Create new branch
 $ git branch ABBA
 $ git switch ABBA
 
-Add some songs to 'songs.txt'
+● Add some songs to 'songs.txt'
 $ git commit -a -m "add Mammamia"
 
-Add some songs to 'songs.txt'
+● Add some songs to 'songs.txt'
 $ git commit -a -m "add dancing queen"
 
-Go back to master branch
+● Go back to master branch
 $ git switch master
 
-Create new file 'podcasts.txt'
+● Create new file 'podcasts.txt'
 $ touch podcasts.txt
 $ git add podcasts.txt
 $ git commit -m "add podcasts file"
 -> Now master branch has new file
    which ABBA branch does not know about
 
-Add some radio program to 'podcasts.txt'
+● Add some radio program to 'podcasts.txt'
 $ git add podcasts.txt
 $ git commit -m "add 3 podcasts"
 
+● Merge
 $ git merge ABBA
 result : hint: Waiting for your editor to close the file...
 -> It opens visual studio code
@@ -83,4 +84,113 @@ result : hint: Waiting for your editor to close the file...
 -> Check 'GitKraken' whether master and ABBA branches are merged
 
 ------------------------------------------------------------------------------------------
+
+▶ Resolve Merge Conflicts
+
+★ Heads Up!
+Depending on the specific changes your are trying to merge,
+Git may not be able to automatically merge.
+This results in merge conflicts, which you need to manually resolve.
+
+Whenever you encounter merge conflicts, follow these steps to resolve them:
+1) Open up the file(s) with merge conflicts
+2) Edit the file(s) to remove the conflicts
+   Decide which branch's content you want to keep in each conflict
+   Or keep the content from both
+3) Remove the conflict "markers" in the document
+4) Add your changes and then make a commit!
+
+$ git branch -d ABBA
+-> Now we have only master branch
+
+● Create new branch 'serena', 'bjorn'
+$ git switch -c serena
+$ git switch master
+$ git switch -c bjorn
+
+※ Create new branch code using 'checkout'
+$ git checkout -b bjorn
+
+● Edit 'songs.txt' file in 'bjorn' branch
+$ git commit -a -m "edited songs"
+$ git commit -a -m "add two more songs"
+
+● Edit 'songs.txt' file in 'serena' branch
+$ git switch serena
+$ git commit -a -m "add one song"
+$ git commit -a -m "add one more song"
+
+● Create new branch 'combo' in 'bjorn' branch
+$ git switch bjorn
+$ git switch -c combo
+
+● Merge 'serena' branch -> CONFLICT! -> Visual Studio Code POP UP
+$ git merge serena
+result : Auto-merging songs.txt
+         CONFLICT (content): Merge conflict in songs.txt
+         Automatic merge failed; fix conflicts and then commit the result.
+
+● Screen of Visual Studio Code
+<<<<<<< HEAD
+Dancing Queen
+King Gizzard & The Lizard Wizard
+Strokes1
+Strokes2
+=======
+ABC - ABBA
+ONE OF US - ABBA
+Mammamia
+Dancing Queen
+Give it to me
+Dolly Parton
+>>>>>>> serena
+
+Method1) Edit Manually
+Delete things you don't want to merge manually
+This time, we would use all of them
+So, we just need to delete "<<<HEAD", "===", ">>>serena" as below:
+
+Dancing Queen
+King Gizzard & The Lizard Wizard
+Strokes1
+Strokes2
+ABC - ABBA
+ONE OF US - ABBA
+Mammamia
+Dancing Queen
+Give it to me
+Dolly Parton
+
+Method2) Click one of them
+- Accept Current Change
+- Accept Incoming Change
+- Accept Both Changes
+- Compare Changes
+
+※ You can edit (add or delete) things in the file freely!
+
+● Add your changes and then make a commit!
+$ git status
+result : On branch combo
+         You have unmerged paths.
+           (fix conflicts and run "git commit")
+           (use "git merge --abort" to abort the merge)
+         
+         Unmerged paths:
+           (use "git add <file>..." to mark resolution)
+                 both modified:   songs.txt
+
+         no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git add .
+$ git commit -m "resolve conflicts"
+
+------------------------------------------------------------------------------------------
+
+▶ Merging Basics Exercise
+
+
+
+
+
 
