@@ -1,6 +1,8 @@
 ※ Git Branch Docs
 https://git-scm.com/docs/git-branch
 
+★ Use "GitKraken" to visualize the branches
+
 ▶ Branches are an essential part of Git!
 Think of branches as alternative timelines for a project.
 They enable us to create separate contexts where we can try new things,
