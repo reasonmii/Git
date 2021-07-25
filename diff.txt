@@ -11,6 +11,7 @@ between commits, branches, files, our working directory, and more!
 - Click any stage you want
 - Click the files in 'view changes' part on the right
 - It will show you what changed
+- If the script is too long, you can click 'Hunk View' to see only the part changed
 
 ------------------------------------------------------------------------------------------
 
@@ -382,13 +383,219 @@ result : diff --git a/colors.txt b/colors.txt
 ※ https://www.notion.so/Git-Diff-Exercise-f7829bd2783940cea14239022a6c37a9
 
 
+$ cd desktop
 
+● Download 'git-diff-exercise' folder from github
+$ git clone https://github.com/Colt/git-diff-exercise
+result : Cloning into 'git-diff-exercise'...
+         remote: Enumerating objects: 15, done.
+         remote: Counting objects: 100% (15/15), done.
+         remote: Compressing objects: 100% (13/13), done.
+         remote: Total 15 (delta 1), reused 15 (delta 1), pack-reused 0
+         Receiving objects: 100% (15/15), done.
+         Resolving deltas: 100% (1/1), done.
 
+● Check the folder
+$ cd git-diff-exercise
+$ ls
+result : fleetwoodmac.txt  queen.txt
+$ code .
 
+$ git branch
+* current
 
+$ git switch 1970s
+$ git branch
+* 1970s
+  current
 
+● Compare the difference between the `1970s` branch
+  and the `current` branch across all files
 
+$ git diff 1970s..current
+result : diff --git a/fleetwoodmac.txt b/fleetwoodmac.txt
+         index 6f44367..653b184 100644
+         --- a/fleetwoodmac.txt
+         +++ b/fleetwoodmac.txt
+         @@ -1,5 +1,5 @@
+         -Lead Vocals: Jeremy Spencer
+         -Lead Guitar: Lindsey Buckingham
+         +Lead Vocals: Stevie Nicks
+         +Lead Guitar: Mike Campbell
+          Bass: John McVie
+          Drums: Mick Fleetwood
+         -Keyboard: None
+         \ No newline at end of file
+         +Keyboard: Christine McVie
+         \ No newline at end of file
+         diff --git a/queen.txt b/queen.txt
+         index 2ab2d04..0e0fa0d 100644
+         --- a/queen.txt
+         +++ b/queen.txt
+         @@ -1,4 +1,4 @@
+         -Lead Vocals: Freddie Mercury
+         +Lead Vocals: Adam Lambert
+          Lead Guitar: Brian May
 
+● Compare the difference between the `1970s` branch
+  and the `current` branch but only for the "queen.txt" file
 
+$ git diff 1970s current queen.txt
+result : diff --git a/queen.txt b/queen.txt
+         index 2ab2d04..0e0fa0d 100644
+         --- a/queen.txt
+         +++ b/queen.txt
+         @@ -1,4 +1,4 @@
+         -Lead Vocals: Freddie Mercury
+         +Lead Vocals: Adam Lambert
+          Lead Guitar: Brian May
+         -Bass: Mike Grose
+         +Bass: Neil Fairclough
+          Drums: Roger Taylor
+        \ No newline at end of file
 
+● Switch over to the `current` branch if you are not currently on it
+  Run a diff to compare the current HEAD to the previous commit
+  (you could use the commit hash or reference HEAD's parent commit)
+
+★ HEAD~1 : the parent commit of head
+
+$ git switch current
+
+Method1)
+$ git diff HEAD HEAD~1
+result : diff --git a/queen.txt b/queen.txt
+         index 0e0fa0d..f7f4a33 100644
+         --- a/queen.txt
+         +++ b/queen.txt
+         @@ -1,4 +1,4 @@
+          Lead Vocals: Adam Lambert
+          Lead Guitar: Brian May
+         -Bass: Neil Fairclough
+         +Bass: John Deacon
+          Drums: Roger Taylor
+        \ No newline at end of file
+
+Method2)
+$ git diff HEAD~1
+result : diff --git a/queen.txt b/queen.txt
+         index f7f4a33..0e0fa0d 100644
+         --- a/queen.txt
+         +++ b/queen.txt
+         @@ -1,4 +1,4 @@
+          Lead Vocals: Adam Lambert
+          Lead Guitar: Brian May
+         -Bass: John Deacon
+         +Bass: Neil Fairclough
+          Drums: Roger Taylor
+         \ No newline at end of file
+
+Method3)
+$ git log --oneline
+result : 09cbcc9 (HEAD -> current, origin/current, origin/HEAD) replace John Deacon as Queen's bassist
+         15db960 add current queen lineup
+         411c922 add current fleetwood mac lineup
+         247e203 (origin/1970s, 1970s) add early 1970s fleetwood mac lineup
+         f31a79f add 1970 queen lineup
+-> Copy the previous commit '15db960'
+
+$ git diff 15db960
+result : diff --git a/queen.txt b/queen.txt
+         index f7f4a33..0e0fa0d 100644
+         --- a/queen.txt
+         +++ b/queen.txt
+         @@ -1,4 +1,4 @@
+          Lead Vocals: Adam Lambert
+          Lead Guitar: Brian May
+         -Bass: John Deacon
+         +Bass: Neil Fairclough
+          Drums: Roger Taylor
+         \ No newline at end of file
+
+● While on the `current` branch, change the `queen.txt` file
+  by replacing Adam Lambert with your own name. Save the change.
+  Add `queen.txt` to the staging area.  DO NOT COMMIT YET!
+
+$ git add queen.txt
+$ git status
+result : On branch current
+         Your branch is up to date with 'origin/current'.
+         
+         Changes to be committed:
+           (use "git restore --staged <file>..." to unstage)
+                 modified:   queen.txt
+
+● Edit the `fleetwoodmac.txt` file, changing the lead singer
+  from Stevie Nicks to Stevie Chicks (one of my chickens).
+  Save the file, but do not stage it.
+
+$ git status
+result : On branch current
+         Your branch is up to date with 'origin/current'.
+
+         Changes to be committed:
+           (use "git restore --staged <file>..." to unstage)
+                 modified:   queen.txt
+
+         Changes not staged for commit:
+           (use "git add <file>..." to update what will be committed)
+           (use "git restore <file>..." to discard changes in working directory)
+                 modified:   fleetwoodmac.txt
+
+● Run a diff that would reveal the "unstaged" changes in the working directory
+  (you should see only the change to `fleetwoodmac.txt` printed out)
+
+$ git diff
+result : diff --git a/fleetwoodmac.txt b/fleetwoodmac.txt
+         index 653b184..8c384c0 100644
+         --- a/fleetwoodmac.txt
+         +++ b/fleetwoodmac.txt
+         @@ -1,4 +1,4 @@
+         -Lead Vocals: Stevie Nicks
+         +Lead Vocals: Stevie Chicks
+          Lead Guitar: Mike Campbell
+          Bass: John McVie
+          Drums: Mick Fleetwood
+
+● Run a diff that would reveal only the "staged" changes
+  (you should only see the change to `queen.txt` printed out)
+
+$ git diff --staged
+result : diff --git a/queen.txt b/queen.txt
+         index 0e0fa0d..5dbd9fa 100644
+         --- a/queen.txt
+         +++ b/queen.txt
+         @@ -1,4 +1,4 @@
+         -Lead Vocals: Adam Lambert
+         +Lead Vocals: reasonmii
+          Lead Guitar: Brian May
+          Bass: Neil Fairclough
+          Drums: Roger Taylor
+         \ No newline at end of file
+
+● Run a diff that prints all changes (staged and unstaged)
+  since the prior commit (you should see both changes printed out)
+
+$ git diff HEAD
+result : diff --git a/fleetwoodmac.txt b/fleetwoodmac.txt
+         index 653b184..8c384c0 100644
+         --- a/fleetwoodmac.txt
+         +++ b/fleetwoodmac.txt
+         @@ -1,4 +1,4 @@
+         -Lead Vocals: Stevie Nicks
+         +Lead Vocals: Stevie Chicks
+          Lead Guitar: Mike Campbell
+          Bass: John McVie
+          Drums: Mick Fleetwood
+         diff --git a/queen.txt b/queen.txt
+         index 0e0fa0d..5dbd9fa 100644
+         --- a/queen.txt
+         +++ b/queen.txt
+         @@ -1,4 +1,4 @@
+         -Lead Vocals: Adam Lambert
+         +Lead Vocals: reasonmii
+          Lead Guitar: Brian May
+          Bass: Neil Fairclough
+          Drums: Roger Taylor
+         \ No newline at end of file
 
