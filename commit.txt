@@ -215,6 +215,8 @@ result : 3a5c6c7 (HEAD -> master) add more contents about toystory
          34417b2 add contents
          1de18f2 create mood board
 
+★ To go out from git log, type 'q'
+
 ------------------------------------------------------------------------------------------
 
 ▶ Amending Commits
