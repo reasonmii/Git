@@ -172,7 +172,7 @@ $ git commit -m "create mood board"
 
 ------------------------------------------------------------------------------------------
 
-▶ Git log
+▶ Git Log
 ※ https://git-scm.com/docs/git-log
 Retrieves information, a log of the commits for a given repository
 
