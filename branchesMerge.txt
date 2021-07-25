@@ -188,9 +188,102 @@ $ git commit -m "resolve conflicts"
 ------------------------------------------------------------------------------------------
 
 ▶ Merging Basics Exercise
+※ https://www.notion.so/Git-Merging-Exercise-0236a17f04c847159a38f5efa978ce2c
+
+$ mkdir desktop/Merging-Exercise
+$ cd Merging-Exercise
+$ git init
+$ touch greetings.txt
+$ git add greetings.txt
+$ git commit -m "add greetings file"
+
+● Part 1: Fast Forward Merge
+Your goal is to generate a fast forward merge
+
+$ git switch -c spanish
+$ code .
+
+Edit 'greetings.txt' file in 'spanish' branch
+$ git add greetings.txt
+$ git commit -m "add spanish greeting"
+
+$ git switch master
+$ git merge spanish
+result : Updating 3c87a5f..280f217
+         Fast-forward
+          greetings.txt | 1 +
+          1 file changed, 1 insertion(+)
+
+● Part 2: Merge Commit (No Conflicts)
+Your goal is to generate a merge commit with NO MERGE CONFLICTS
+
+$ git switch -c french
+
+Edit 'greetings.txt' file in 'french' branch
+$ git add greetings.txt
+$ git commit -m "add french greeting"
+
+Add new file 'goodbye.txt' file in 'master' branch
+$ git switch master
+$ git add goodbye.txt
+$ git commit -m "add goodbye file"
+
+$ git merge french
+result : Merge made by the 'recursive' strategy.
+          greetings.txt | 3 ++-
+          1 file changed, 2 insertions(+), 1 deletion(-)
+
+$ git log --oneline
+result : d0115c6 (HEAD -> master) Merge branch 'french'
+         63bd2a3 add goodbye file
+         7826b32 (french) add french greeting
+         280f217 (spanish) add spanish greeting
+         3c87a5f add greetings file
 
 
+● Part 3: Conflicts!
+Your goal is to generate merge a conflict!
 
+Create new branch 'Korean'
+And edit 'greetings.txt' file in 'Korean' branch
+$ git switch -c Korean
+$ git add greetings.txt
+$ git commit -m "add korean greeting"
 
+Edit 'greetings.txt' file in 'master' branch
+$ git switch master
+$ git add greetings.txt
+$ git commit -m "add hello"
 
+$ git merge Korean
+result : Auto-merging greetings.txt
+         CONFLICT (content): Merge conflict in greetings.txt
+         Automatic merge failed; fix conflicts and then commit the result.
+
+Click 'Accept both changes' in VSCode
+
+$ git status
+result : On branch master
+         You have unmerged paths.
+           (fix conflicts and run "git commit")
+           (use "git merge --abort" to abort the merge)
+
+         Unmerged paths:
+           (use "git add <file>..." to mark resolution)
+                 both modified:   greetings.txt
+
+         no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git add greetings.txt
+$ git commit -m "resolve conflicts"
+
+$ git log --oneline
+7ea7813 (HEAD -> master) resolve conflicts
+c589422 add hello
+16ad067 (Korean) add korean greeting
+d0115c6 Merge branch 'french'
+63bd2a3 add goodbye file
+7826b32 (french) add french greeting
+280f217 (spanish) add spanish greeting
+3c87a5f add greetings file
 
