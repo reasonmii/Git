@@ -1,0 +1,129 @@
+★ Use "GitKraken" to visualize the process
+
+Usually, HEAD points to a specific branch reference
+However, when we checkout a particular commit,
+★ HEAD points at that "commit" rather than at the branch pointer
+
+------------------------------------------------------------------------------------------
+
+▶ Check Out Old Commits : git checkout commit <commit-hash>
+Use it to view a previous commit
+We just need "the first 7 digits of a commit hash"
+※ Remember, you can use the git log command to view commit hashes
+
+$ cd desktop
+$ cd myFirstGit
+$ git log --oneline
+result : 061ecf0 (HEAD -> master) final
+         d2069be (oldies) add headings to all files
+         d392685 edit more
+         b34bdbd add two new photo
+         8c36d0f delete all png files
+         6180ec9 add buzz and woody
+         3a5c6c7 add more contents about toystory
+         34417b2 add contents
+         1de18f2 create mood board
+         f4fc729 create files
+
+$ git checkout 3a5c6c7
+result : Note: switching to '3a5c6c7'.
+         You are in 'detached HEAD' state. You can look around, make experimental
+         changes and commit them, and you can discard any commits you make in this
+         state without impacting any branches by switching back to a branch.
+
+         If you want to create a new branch to retain commits you create, you may
+         do so (now or later) by using -c with the switch command. Example:
+           git switch -c <new-branch-name>
+         Or undo this operation with:
+           git switch -
+         Turn off this advice by setting config variable advice.detachedHead to false
+         HEAD is now at 3a5c6c7 add more contents about toystory
+
+$ git log --oneline
+result : 3a5c6c7 (HEAD) add more contents about toystory
+         34417b2 add contents
+         1de18f2 create mood board
+         f4fc729 create files
+-> There are only 4 commits
+
+$ git checkout 1de18f2
+result : Previous HEAD position was 3a5c6c7 add more contents about toystory
+         HEAD is now at 1de18f2 create mood board
+
+$ git log --oneline
+result : 1de18f2 (HEAD) create mood board
+         f4fc729 create files
+
+------------------------------------------------------------------------------------------
+
+★ Don't panic when "detached HEAD" message happens!
+It's not a bad thing!
+You have a couple options:
+1) Stay in detached HEAD to examine the contents of the old commit.
+   Poke around, view the files, etc.
+2) Leave and go back to wherever you were before : "reattach the HEAD"
+3) Create a new branch and switch to it.
+   You can now make and save changes, since HEAD is no longer detached.
+
+------------------------------------------------------------------------------------------
+
+▶ Reattach the HEAD
+If you checkout an old commit and
+decide you want to return to where you were before.
+Simply switch back to whatever branch you were on before.
+
+$ git switch master
+Previous HEAD position was 1de18f2 create mood board
+Switched to branch 'master'
+
+$ git log --oneline
+result : 061ecf0 (HEAD -> master) final
+         d2069be (oldies) add headings to all files
+         d392685 edit more
+         b34bdbd add two new photo
+         8c36d0f delete all png files
+         6180ec9 add buzz and woody
+         3a5c6c7 add more contents about toystory
+         34417b2 add contents
+         1de18f2 create mood board
+         f4fc729 create files
+-> We come back. Nothing's changed!
+
+------------------------------------------------------------------------------------------
+
+▶ Create a New Branch and Switch to it
+
+● Go back to past commit "b34bdbd"
+$ git checkout b34bdbd
+
+● Create new branch
+$ git switch -c redo-practice
+result : Switched to a new branch 'redo-practice'
+$ git status
+result : On branch redo-practice
+         nothing to commit, working tree clean
+
+★ Files look like the commit happened in the past
+   Now we can edit them in VSCode
+
+● Edit some files
+$ git status
+result : On branch redo-practice
+         Changes not staged for commit:
+           (use "git add <file>..." to update what will be committed)
+           (use "git restore <file>..." to discard changes in working directory)
+                 modified:   chapter2.txt
+                 modified:   characters.txt
+                 modified:   outline.txt
+         no changes added to commit (use "git add" and/or "git commit -a")
+$ git add .
+$ git commit -m "start second step"
+
+Now we have new branch called "redo-practice"
+It only contains new edited files
+and history which happened before the commit "b34bdbd" 
+★ It doesn't have any history which happened after the commit "b34bdbd"
+
+● Go back to where we were
+$ git switch master
+
