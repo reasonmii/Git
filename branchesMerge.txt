@@ -278,12 +278,12 @@ $ git add greetings.txt
 $ git commit -m "resolve conflicts"
 
 $ git log --oneline
-7ea7813 (HEAD -> master) resolve conflicts
-c589422 add hello
-16ad067 (Korean) add korean greeting
-d0115c6 Merge branch 'french'
-63bd2a3 add goodbye file
-7826b32 (french) add french greeting
-280f217 (spanish) add spanish greeting
-3c87a5f add greetings file
+result : 7ea7813 (HEAD -> master) resolve conflicts
+         c589422 add hello
+         16ad067 (Korean) add korean greeting
+         d0115c6 Merge branch 'french'
+         63bd2a3 add goodbye file
+         7826b32 (french) add french greeting
+         280f217 (spanish) add spanish greeting
+         3c87a5f add greetings file
 
