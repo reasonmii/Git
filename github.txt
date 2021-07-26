@@ -1,0 +1,53 @@
+▶ Git
+Git is the version control software that runs locally on your machine.
+You don't need to register for an account.
+You don't need the internet to use it.
+You can use Git without ever touching Github.
+
+▶ Github
+※ https://github.com/
+Github is a service that hosts Git repositories in the cloud
+and makes it easier to collaborate with other people.
+You do need to sign up for an account to use Github.
+It's an online place to share work that is done using Git.
+
+▶ Git Clone : git clone <url>
+※ https://git-scm.com/docs/git-clone
+Anyone can clone a repository from Github, provided the repo is public.
+You do not need to be an owner or collaborator to clone the repo locally to your machine.
+You just need the URL from Github.
+
+When you run the code to clone a repo, 
+Git will retrieve all the files associated with the repository
+and will copy them to your local machine.
+In addition, Git initializes a new repository on your machine,
+giving you access to the full Git history of the cloned project.
+
+★ Make sure you are not inside of a repo when you clone!
+$ git status
+result : fatal: not a git repository (or any of the parent directories): .git
+
+▶ Non-Github Clone : git clone <url>
+We are not limited to Github Repos!
+git clone is a standard git command.
+It is NOT tied specifically to Github.
+We can use it to clone repositories that are hosted anywhere!
+It just happens that most of the hosted repos are on Github these days.
+
+$ git clone "https://gitlab.com/gitlab-tests/sample-project"
+
+▶ Github Setup: SSH Config
+※ https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
+You need to be authenticated on Github to do certain operations,
+like pushing up code from your local machine.
+Your terminal will prompt you every single time for your Github email and password,
+unless you generate and configure an SSH key!
+★ Once configured, you can connect to Github without having to supply your username/password
+
+
+
+
+
+
+
+
