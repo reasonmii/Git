@@ -55,7 +55,7 @@ to some of the uses for checkout
 ※ https://git-scm.com/docs/git-restore
 Suppose you've made some changes to a file since your last commit
 You've saved the file but then realize you definitely do NOT want those changes anymore!
-★ This is same as discarding changes
+★ This is the same as discarding changes
 ★ If you have uncommited changes in the file, they will be lost!
 ★ Git will let you know those commands when you type 'git status'
 
@@ -116,7 +116,7 @@ $ rm secret.txt
 ------------------------------------------------------------------------------------------
 
 ▶ Git Reset : git reset <commit-hash>
-Suppose you've just made a couple of commits on the master branch,
+Suppose you've just made a couple of "commits" on the master branch,
 but you actually meant to make them on a separate branch instead
 To "undo those commits", you can use "git reset"
 It will reset the repo back to a specific commit
@@ -241,10 +241,93 @@ No one will ever know!
 ▶ Undoing Changes Basics Exercise
 ※ https://www.notion.so/Undoing-Things-Exercise-d2fc1825dcc047c291a9a960848fdf71
 
+$ cd desktop
+$ git clone https://github.com/Colt/yesterday-exercise
+$ cd yesterday-exercise
+$ git status
+$ ls
+result : lyrics.txt
+$ code lyrics.txt
 
+$ git log --oneline
+result : f199959 (HEAD -> master, origin/master, origin/HEAD) rework final verse
+         8e3111c rework chorus
+         b88b254 rework second verse
+         b593444 rework first verse
+         cdd927c finish original lyrics
+         9518e20 add original chorus
+         9858f43 add original second verse
+         485a339 add original first verse
 
+● Go back in time by checking out the very "first commit"
+$ git checkout 485a339
+result : Note: switching to '485a339'.
+         You are in 'detached HEAD' state. You can look around, make experimental
+         changes and commit them, and you can discard any commits you make in this
+         state without impacting any branches by switching back to a branch.
+         If you want to create a new branch to retain commits you create, you may
+         do so (now or later) by using -c with the switch command. Example:
+           git switch -c <new-branch-name>
+         Or undo this operation with:
+           git switch -
+         Turn off this advice by setting config variable advice.detachedHead to false
+         HEAD is now at 485a339 add original first verse
 
+$ git switch -
 
+● Go back to the commit where the original version of the lyrics was completed
+$ git checkout cdd927c
+result : Note: switching to 'cdd927c'.
+         You are in 'detached HEAD' state. You can look around, make experimental
+         changes and commit them, and you can discard any commits you make in this
+         state without impacting any branches by switching back to a branch.
+         If you want to create a new branch to retain commits you create, you may
+         do so (now or later) by using -c with the switch command. Example:
+           git switch -c <new-branch-name>
+         Or undo this operation with:
+           git switch -
+         Turn off this advice by setting config variable advice.detachedHead to false
+         HEAD is now at cdd927c finish original lyrics
 
+● Create a new branch
+$ git switch -c scrambled-eggs
+$ git switch master
 
+● Delete everything in the 'lyrics.txt' file
+
+● Discard the changes
+$ git checkout HEAD lyrics.txt
+
+● Edit 'lyrics.txt'
+$ git add .
+$ git commit -m "new lyrics by me"
+
+● Edit 'lyrics.txt'
+$ git add .
+$ git commit -m "add bottom"
+
+$ git log --oneline
+result : a0a990c (HEAD -> master) add bottom
+         c6b8af3 new lyrics by me
+         f199959 (origin/master, origin/HEAD) rework final verse
+         8e3111c rework chorus
+         b88b254 rework second verse
+         b593444 rework first verse
+         cdd927c (scrambled-eggs) finish original lyrics
+         9518e20 add original chorus
+         9858f43 add original second verse
+         485a339 add original first verse
+
+● Undo the prior two commits on master
+$ git reset f199959
+result : Unstaged changes after reset:
+         M       lyrics.txt
+
+● Create a new branch
+  and add and commit the 404 lyrics in your working directory
+$ git switch -c 404
+$ git add .
+$ git commit -m "new changes"
+
+$ git switch master
 
