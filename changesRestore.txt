@@ -52,6 +52,7 @@ git restore was introduced alongside git switch as alternatives
 to some of the uses for checkout
 
 ▶ Unmodifying Files with Restore : git restore <file-name>
+※ https://git-scm.com/docs/git-restore
 Suppose you've made some changes to a file since your last commit
 You've saved the file but then realize you definitely do NOT want those changes anymore!
 ★ This is same as discarding changes
@@ -156,6 +157,7 @@ $ git switch master
 ------------------------------------------------------------------------------------------
 
 ▶ Reset --hard : git reset --hard <commit>
+※ https://git-scm.com/docs/git-reset
 Use the "--hard option" to undo both the commits AND the actual changes in your files
 ex) "git reset --hard HEAD~1" will delete the last commit and associated changes
 
@@ -176,6 +178,71 @@ result : 0f1469a (HEAD -> master) third commit
          5dec360 first commit
 
 ------------------------------------------------------------------------------------------
+
+▶ Git Revert : git revert <commit-hash>
+※ https://git-scm.com/docs/git-revert
+git revert is similar to git reset in that they both "undo" changes,
+but they accomplish it in different ways.
+- git reset actually moves the branch pointer backwards, eliminating commits
+- git revert instead creates a brand new commit
+  which reverses/undos the changes from a commit
+★ Because it results in "a new commit", you will be prompted to enter a commit message
+
+● Edit 'cat.txt' and 'dog.txt' files and commit
+$ git commit -a -m "make bad commit"
+$ git log --oneline
+result : 2aa1c1f (HEAD -> master) make bad commit
+         0f1469a third commit
+         9f77adf second commit
+         5dec360 first commit
+
+● Revert
+$ git revert 2aa1c1f
+-> Visual Studio Code pops up
+
+● Visual Studio Code's screen
+Revert "make bad commit"
+
+This reverts commit 2aa1c1f88cb4eb2dfdea86b7a931a72b1b33f394.
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Changes to be committed:
+#	modified:   cat.txt
+#	modified:   dog.txt
+#
+
+-> Just close it
+
+● Check the new commit
+$ git log --oneline
+result : e23a3a3 (HEAD -> master) Revert "make bad commit"
+         2aa1c1f make bad commit
+         0f1469a third commit
+         9f77adf second commit
+         5dec360 first commit
+-> ★ History is preserved
+
+------------------------------------------------------------------------------------------
+
+Both "git reset" and "git revert" help us reverse changes,
+but there is a "significant difference" when it comes to collaboration
+
+Use "revert", if you want to reverse some commits
+that other people already have on their machines, you should 
+
+Use "reset", if you want to reverse commits that you haven't shared with others
+No one will ever know!
+
+------------------------------------------------------------------------------------------
+
+▶ Undoing Changes Basics Exercise
+※ https://www.notion.so/Undoing-Things-Exercise-d2fc1825dcc047c291a9a960848fdf71
+
+
+
 
 
 
