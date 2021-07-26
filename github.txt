@@ -213,7 +213,7 @@ result : Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
          remote:
          To https://github.com/reasonmii/demo.git
           * [new branch]      dogs -> dogs
--> 'dogs' branch is greated in github
+-> 'dogs' branch is pushed in github
 
 $ touch dogs.txt
 $ git add dogs.txt
@@ -323,19 +323,98 @@ result : Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
 There are both master and main branch
 Settings - Branches - Change the default branch from 'master' to 'main'
 
+------------------------------------------------------------------------------------------
 
+▶ Github Basics Exercise 
 
+● Create a new repository 'things' in github
 
+$ cd desktop
+$ mkdir practice
+$ cd practice
+$ git init
 
+$ git remote add origin https://github.com/reasonmii/things.git
+$ git remote -v
+result : origin  https://github.com/reasonmii/things.git (fetch)
+         origin  https://github.com/reasonmii/things.git (push)
 
+$ touch favorites.txt
+$ git add favorites.txt
+$ git commit -m "add file"
 
+● Rename the default branch from master to main
+$ git branch -M main
 
+● Push up your main branch to Github
+$ git push origin main
+result : Enumerating objects: 3, done.
+         Counting objects: 100% (3/3), done.
+         Writing objects: 100% (3/3), 210 bytes | 70.00 KiB/s, done.
+         Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+         To https://github.com/reasonmii/color.git
+          * [new branch]      main -> main
 
+$ code .
 
+● Create two branches: foods and movies
+$ git switch -c foods
+$ git switch -c movies
 
+$ git switch foods
+$ git commit -am "add my favorite foods"
 
+$ git switch movies
+$ git add .
+$ git commit -m "add movies"
 
+● Push up your foods branch to Github
+$ git push origin foods
+result : Enumerating objects: 5, done.
+         Counting objects: 100% (5/5), done.
+         Writing objects: 100% (3/3), 263 bytes | 87.00 KiB/s, done.
+         Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+         remote:
+         remote: Create a pull request for 'foods' on GitHub by visiting:
+         remote:      https://github.com/reasonmii/color/pull/new/foods
+         remote:
+         To https://github.com/reasonmii/color.git
+          * [new branch]      foods -> foods
 
+● Push up your movies branch to Github
+$ git push origin movies
+result : Enumerating objects: 5, done.
+         Counting objects: 100% (5/5), done.
+         Writing objects: 100% (3/3), 274 bytes | 274.00 KiB/s, done.
+         Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+         remote:
+         remote: Create a pull request for 'movies' on GitHub by visiting:
+         remote:      https://github.com/reasonmii/color/pull/new/movies
+         remote:
+         To https://github.com/reasonmii/color.git
+          * [new branch]      movies -> movies
 
+● Merge the foods branch into the main branch
+$ git switch main
+$ git merge foods
 
+● Merge the movies branch into the main branch
+  If necessary, resolve conflicts
+$ git merge movies
+result : Auto-merging favorites.txt
+         CONFLICT (content): Merge conflict in favorites.txt
+         Automatic merge failed; fix conflicts and then commit the result.
+
+$ git add .
+$ git commit -m "merge changes"
+
+$ git push origin main
+result : Enumerating objects: 7, done.
+         Counting objects: 100% (7/7), done.
+         Delta compression using up to 4 threads
+         Compressing objects: 100% (2/2), done.
+         Writing objects: 100% (3/3), 321 bytes | 321.00 KiB/s, done.
+         Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+         To https://github.com/reasonmii/color.git
+            f290c21..51e3ce2  main -> main
 
