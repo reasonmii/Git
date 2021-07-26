@@ -352,7 +352,7 @@ result : Enumerating objects: 3, done.
          Counting objects: 100% (3/3), done.
          Writing objects: 100% (3/3), 210 bytes | 70.00 KiB/s, done.
          Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
-         To https://github.com/reasonmii/color.git
+         To https://github.com/reasonmii/things.git
           * [new branch]      main -> main
 
 $ code .
@@ -376,9 +376,9 @@ result : Enumerating objects: 5, done.
          Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
          remote:
          remote: Create a pull request for 'foods' on GitHub by visiting:
-         remote:      https://github.com/reasonmii/color/pull/new/foods
+         remote:      https://github.com/reasonmii/things/pull/new/foods
          remote:
-         To https://github.com/reasonmii/color.git
+         To https://github.com/reasonmii/things.git
           * [new branch]      foods -> foods
 
 ● Push up your movies branch to Github
@@ -389,9 +389,9 @@ result : Enumerating objects: 5, done.
          Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
          remote:
          remote: Create a pull request for 'movies' on GitHub by visiting:
-         remote:      https://github.com/reasonmii/color/pull/new/movies
+         remote:      https://github.com/reasonmii/things/pull/new/movies
          remote:
-         To https://github.com/reasonmii/color.git
+         To https://github.com/reasonmii/things.git
           * [new branch]      movies -> movies
 
 ● Merge the foods branch into the main branch
@@ -415,6 +415,6 @@ result : Enumerating objects: 7, done.
          Compressing objects: 100% (2/2), done.
          Writing objects: 100% (3/3), 321 bytes | 321.00 KiB/s, done.
          Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
-         To https://github.com/reasonmii/color.git
+         To https://github.com/reasonmii/things.git
             f290c21..51e3ce2  main -> main
 
