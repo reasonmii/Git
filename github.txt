@@ -11,6 +11,8 @@ and makes it easier to collaborate with other people.
 You do need to sign up for an account to use Github.
 It's an online place to share work that is done using Git.
 
+------------------------------------------------------------------------------------------
+
 ▶ Git Clone : git clone <url>
 ※ https://git-scm.com/docs/git-clone
 Anyone can clone a repository from Github, provided the repo is public.
@@ -36,6 +38,8 @@ It just happens that most of the hosted repos are on Github these days.
 
 $ git clone "https://gitlab.com/gitlab-tests/sample-project"
 
+------------------------------------------------------------------------------------------
+
 ▶ Github Setup: SSH Config
 ※ https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
 You need to be authenticated on Github to do certain operations,
@@ -43,6 +47,290 @@ like pushing up code from your local machine.
 Your terminal will prompt you every single time for your Github email and password,
 unless you generate and configure an SSH key!
 ★ Once configured, you can connect to Github without having to supply your username/password
+
+$ cd desktop
+$ cd mkdir
+$ cd abc
+
+● Checking for existing SSH keys
+$ ls -al ~/.ssh
+
+● Generating a new SSH key
+$ git config user.email
+cdyn17@gmail.com
+
+1) Use your email address of github
+2) Hit 'enter'
+3) Enter the passphrase -> reenter the passphrase
+$ ssh-keygen -t ed25519 -C "cdyn17@gmail.com"
+result : Generating public/private ed25519 key pair.
+         Enter file in which to save the key (/c/Users/User/.ssh/id_ed25519):
+         Enter passphrase (empty for no passphrase):
+         Enter same passphrase again:
+         Your identification has been saved in /c/Users/User/.ssh/id_ed25519
+         Your public key has been saved in /c/Users/User/.ssh/id_ed25519.pub
+         The key fingerprint is:
+         SHA256:TSUOaHF/w8KhefVc3szuYQ33/kfssEQwt4scQYFkoi0 cdyn17@gmail.com
+         The key's randomart image is:
+         +--[ED25519 256]--+
+         |      .o+.=o=.  .|
+         |      o+ X.*+o.=.|
+         |     .E + B +=+.*|
+         |       . + o..o+o|
+         |        S .. + =+|
+         |            o =o+|
+         |             . =o|
+         |              . +|
+         |                o|
+         +----[SHA256]-----+
+
+● Ensure the ssh-agent is running in the background
+Start the ssh-agent in the background
+$ eval "$(ssh-agent -s)"
+result : Agent pid 1031
+
+$ ssh-add ~/.ssh/id_ed25519
+-> Enter passphrase
+result : Identity added: /c/Users/User/.ssh/id_ed25519 (cdyn17@gmail.com)
+
+● Copy the SSH public key to your clipboard
+If your SSH public key file has a different name than the example code,
+modify the filename to match your current setup.
+When copying your key, don't add any newlines or whitespace.
+$ clip < ~/.ssh/id_ed25519.pub
+
+● Copies the contents of the id_ed25519.pub file to your clipboard
+Go to the folder '/c/Users/User/.ssh'
+Open the file 'id_ed25519.pub'
+Copty the text
+ex) ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHOMO+VbTGAYO+wRzNYiqHdXKxQfcREELAAyCFj5leLz cdyn17@gmail.com
+
+● Go to Github Page
+Click your profile on the right top - settings - SSH and GPG keys - new SSH keys
+Paste what you copied
+title : myComputer - Save
+
+------------------------------------------------------------------------------------------
+
+▶ How Do I Get My Code on Github?
+
+1. Existing Repo
+If you already have an existing repo locally that you want to get on Github
+- Create a new repo on Github
+- Connect your local repo (add a remote)
+- Push up your changes to Github
+
+2. Start From Scratch
+If you haven't begun work on your local repo, you can
+- Create a brand new repo on Github
+- Clone it down to your machine
+- Do some work locally
+- Push up your changes to Github
+
+------------------------------------------------------------------------------------------
+
+▶ Get our Code on Github : Existing Repo
+
+Suppose we want to move 'color' folder to github
+$ cd desktop/color
+
+● Create a new repository in Github
+name : demo
+
+● Connect your local repo
+  Adding A New Remote : git remote add <name> <url>
+$ git remote add origin https://github.com/reasonmii/demo.git
+
+※ Origin
+- It is a conventional Git remote name.
+- When we clone a Github repo, the default remote name setup for us is called origin.
+- You can change it, but most people leave it.
+
+$ git remote -v
+result : origin  https://github.com/reasonmii/demo.git (fetch)
+         origin  https://github.com/reasonmii/demo.git (push)
+
+Now that we have a remote set up, let's push some work up to Github!
+
+● Pushing : git push <remote> <branch>
+※ https://git-scm.com/docs/git-push
+We need to specify the remote we want to push up to
+AND the "specific local branch" we want to push up to that remote.
+
+"git push origin master" tells git
+to push up the master branch to our origin remote
+$ git push origin master
+-> GitHub Signup Pops up : Sign up
+   Refresh the Github page, you can see files and folders of 'color'
+
+● Push other branches
+$ git push origin odd-numbers
+result : Enumerating objects: 8, done.
+         Counting objects: 100% (8/8), done.
+         Delta compression using up to 4 threads
+         Compressing objects: 100% (4/4), done.
+         Writing objects: 100% (6/6), 539 bytes | 269.00 KiB/s, done.
+         Total 6 (delta 0), reused 0 (delta 0), pack-reused 0
+         remote:
+         remote: Create a pull request for 'odd-numbers' on GitHub by visiting:
+         remote:      https://github.com/reasonmii/demo/pull/new/odd-numbers
+         remote:
+         To https://github.com/reasonmii/demo.git
+          * [new branch]      odd-numbers -> odd-numbers
+-> Refresh the Github page, you can see files and folders of 'color'
+   Click the branch part to decide which branch to see
+
+------------------------------------------------------------------------------------------
+
+▶ Push in Detail
+
+● git push <remote> <local-branch>:<remote-branch>
+Use to push our local branch up to a remote branch
+ex) git push origin pancake:waffle
+
+Create 'cats.txt' in 'cats' branch
+When you go to 'master' branch, you can't see the file
+$ git switch -c cats
+$ touch cats.txt
+$ git add cats.txt
+$ git commit -m "create cats file"
+
+$ git push origin cats:master
+-> Check github
+   Now, 'cats.txt' file is also in 'master' branch
+
+● git push -u <remote> <branch>
+This "sets the upstream" of the local master branch
+so that it "tracks" the master branch on the origin repo
+
+$ git switch master
+$ git switch -c dogs
+$ git push origin dogs
+result : Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+         remote:
+         remote: Create a pull request for 'dogs' on GitHub by visiting:
+         remote:      https://github.com/reasonmii/demo/pull/new/dogs
+         remote:
+         To https://github.com/reasonmii/demo.git
+          * [new branch]      dogs -> dogs
+-> 'dogs' branch is greated in github
+
+$ touch dogs.txt
+$ git add dogs.txt
+$ git commit -m "create dogs"
+
+Try pushing the contents of 'dogs' branch in Git to 'dogs' branch in Github
+$ git push
+result : fatal: The current branch dogs has no upstream branch.
+         To push the current branch and set the remote as upstream, use
+             git push --set-upstream origin dogs
+-> ★ ERROR
+   Git doesn't know which branch should it use in Github
+   It doesn't automatically match 'dogs' branch in Git to 'dogs' branch in Github
+
+★ Set 'dogs' branch in Github as the upstream 
+$ git push -u origin dogs
+result : Enumerating objects: 4, done.
+         Counting objects: 100% (4/4), done.
+         Delta compression using up to 4 threads
+         Compressing objects: 100% (2/2), done.
+         Writing objects: 100% (3/3), 299 bytes | 299.00 KiB/s, done.
+         Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+         To https://github.com/reasonmii/demo.git
+            486f761..dc22b72  dogs -> dogs
+         Branch 'dogs' set up to track remote branch 'dogs' from 'origin'.
+
+$ touch moredogs.txt
+$ git add moredogs.txt
+$ git commit -m "create more dogs"
+$ git push
+result : Enumerating objects: 3, done.
+         Counting objects: 100% (3/3), done.
+         Delta compression using up to 4 threads
+         Compressing objects: 100% (2/2), done.
+         Writing objects: 100% (2/2), 225 bytes | 225.00 KiB/s, done.
+         Total 2 (delta 1), reused 0 (delta 0), pack-reused 0
+         remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+         To https://github.com/reasonmii/demo.git
+            dc22b72..301359b  dogs -> dogs
+-> ★ No ERROR
+   Becuase we did '-u origin dogs',
+   Git knows 'push' commands means 'push to dogs branch in Github'
+
+------------------------------------------------------------------------------------------
+
+▶ Get our Code on Github : Start From Scratch
+
+● Create a new repository in Github
+ex) name : demo
+- Copy the url
+
+● Open Git
+$ cd desktop
+$ mkdir githubdemo
+$ cd githubdemo
+$ git clone https://github.com/reasonmii/demo.git
+result : Cloning into 'demo'...
+         warning: You appear to have cloned an empty repository.
+$ ls
+result : demo/
+-> 'demo' repository from Github is created
+
+$ cd demo
+$ git status
+$ git remote -v
+result : origin  https://github.com/reasonmii/demo.git (fetch)
+         origin  https://github.com/reasonmii/demo.git (push)
+
+● Create new file
+$ touch chicken.txt
+$ code .
+$ git add chicken.txt
+$ git commit -m "first commit"
+
+● Push master branch to Github
+$ git branch
+$ git push origin master
+result : Enumerating objects: 3, done.
+         Counting objects: 100% (3/3), done.
+         Writing objects: 100% (3/3), 241 bytes | 241.00 KiB/s, done.
+         Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+         To https://github.com/reasonmii/demo.git
+          * [new branch]      master -> master
+
+------------------------------------------------------------------------------------------
+
+▶ Change Default Branche : Master -> Main
+Rename the Branch : git branch -M <new-name>
+
+$ git branch
+result : * master
+
+$ git branch -M main
+$ git branch
+result : * main
+
+$ git push origin main
+result : Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+         remote:
+         remote: Create a pull request for 'main' on GitHub by visiting:
+         remote:      https://github.com/reasonmii/demo/pull/new/main
+         remote:
+         To https://github.com/reasonmii/demo.git
+          * [new branch]      main -> main
+
+● Check Github
+There are both master and main branch
+Settings - Branches - Change the default branch from 'master' to 'main'
+
+
+
+
+
+
+
+
+
 
 
 
