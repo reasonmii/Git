@@ -1,0 +1,367 @@
+
+▶ Remote Tracking Branches : git branch -r
+Use it to view the remote branches our local repository knows about
+
+"At the time you last communicated with this remote
+repository, here is where x branch was pointing"
+
+They follow this pattern "<remote>/<branch>"
+- "origin/master" references the state of the master branch
+  on the remote repo named origin.
+- "upstream/logoRedesign" references the state of the logoRedesign branch
+  on the remote named upstream (a common remote name)
+
+● origin/main
+- This is a "Remote Tracking Branch"
+- It's a reference to the state of the master branch on the remote
+- I can't move this myself
+- It's like a bookmark pointing to the last known commit on the master branch on origin
+
+● Create Github Repository : animal
+Create a file : pets.txt
+content : Rusty
+          Blue
+          Scout
+          Rocket
+          Jim
+
+● Git
+$ cd desktop
+$ mkdir fechingpulling
+$ cd fechingpulling
+$ git status
+result : fatal: not a git repository (or any of the parent directories): .git
+
+$ git clone https://github.com/reasonmii/animal.git
+result : Cloning into 'animal'...
+         remote: Enumerating objects: 3, done.
+         remote: Counting objects: 100% (3/3), done.
+         remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+         Receiving objects: 100% (3/3), done.
+
+$ ls
+result : animal/
+
+$ cd animal
+$ git branch
+result : * main
+$ git remote -v
+result : origin  https://github.com/reasonmii/animal.git (fetch)
+         origin  https://github.com/reasonmii/animal.git (push)
+
+$ git branch -r
+  origin/HEAD -> origin/main
+  origin/main
+
+$ ls
+$ code .
+
+● Edit 'pets.txt' file
+$ git add pets.txt
+$ git commit -m "add two more names"
+$ git status
+result : On branch main
+         Your branch is ahead of 'origin/main' by 1 commit.
+           (use "git push" to publish your local commits)
+         nothing to commit, working tree clean
+-> This means now your "master" branch is pointing
+   "one" branch ahead from 'origin/main' of Github
+
+$ git add pets.txt
+$ git commit -m "more names"
+$ git status
+result : On branch main
+         Your branch is ahead of 'origin/main' by 2 commits.
+           (use "git push" to publish your local commits)
+         nothing to commit, working tree clean
+-> This means now your "master" branch is pointing
+   "two" branch ahead from 'origin/main' of Github
+
+------------------------------------------------------------------------------------------
+
+▶ Checkout Remote Branch Pointers : git checkout origin/master
+Go back to the last time we communicated with 'Github'
+-> Check the file : it is the same as when the last communication happened
+
+$ git checkout origin/main
+result : Note: switching to 'origin/main'.
+         
+         You are in 'detached HEAD' state. You can look around, make experimental
+         changes and commit them, and you can discard any commits you make in this
+         state without impacting any branches by switching back to a branch.
+
+         If you want to create a new branch to retain commits you create, you may
+         do so (now or later) by using -c with the switch command. Example:
+         git switch -c <new-branch-name>
+         Or undo this operation with:
+           git switch -
+         Turn off this advice by setting config variable advice.detachedHead to false
+         HEAD is now at 526ac4a more names
+
+If you want to work from here again
+1) You can create a new branch
+2) You can undo things
+
+● To see where we are now, after changes
+$ git switch main
+※ $ git switch -
+
+● Push new commit to Github
+$ git push origin main
+
+$ git status
+result : On branch main
+         Your branch is up to date with 'origin/main'.
+         nothing to commit, working tree clean
+-> This means now your "master" branch is pointing
+   the same branch with 'origin/main' of Github
+
+------------------------------------------------------------------------------------------
+
+▶ Working with Remote Branches : git switch <remote-branch-name>
+To create a new local branch that tracks branches in Github,
+we can use the remote branch of the same name
+ex) "git switch puppies" makes me a local puppies branch
+    AND sets it up to track the remote branch origin/puppies.
+
+★ the new command git switch makes this super easy to do!
+   It used to be slightly more complicated using git checkout:
+   "git checkout --track origin/puppies"
+
+$ cd ..
+$ git clone https://github.com/Colt/remote-branches-demo.git
+$ cd remote-branches-demo
+$ git status
+result : On branch main
+         Your branch is up to date with 'origin/main'.
+         nothing to commit, working tree clean
+
+● Check a branch Git knows about : only 'main'
+$ git branch
+result : * main
+-> Local repo doesn't know about all the branches, but just 'main'
+
+● Check branches in Github
+$ git branch -r
+result :   origin/HEAD -> origin/main
+           origin/fantasy
+           origin/food
+           origin/main
+           origin/more-fantasy
+           origin/morefood
+           origin/movies
+-> There are actually many different branches in github
+
+$ git checkout origin/food
+$ ls
+result : apple.txt  banana.txt  coffee.txt  popsicle.txt  tea.txt
+
+● Create a new branch that tracks a branch in Github
+$ git switch main
+$ git switch movies
+result : Switched to a new branch 'movies'
+         Branch 'movies' set up to track remote branch 'movies' from 'origin'.
+
+$ git branch
+result :   main
+         * movies
+
+------------------------------------------------------------------------------------------
+
+▶ Git Fetch
+
+Fetching allows us to download changes from a remote repository,
+BUT those changes will not be automatically integrated into our working files.
+It lets you see what others have been working on,
+without having to merge those changes into your local repo.
+★ please go and get the latest information from Github, but don't screw up my working directory
+
+1) git fetch <remote>
+It fetches branches and history from a specific remote repository
+It only updates remote tracking branches
+"git fetch origin" would fetch all changes from the origin remote repository
+
+2) git fetch <remote> <branch>
+It fetches a specific branch from a remote repository
+We have changes on our machine,
+but if we want to see them we have to checkout origin/master
+★ Our master branch is untouched!
+
+● Create new branch in Github
+Git can't know
+When you code "git fetch", it would recognize the new branch
+Check new branch with "git branch -r"
+
+------------------------------------------------------------------------------------------
+
+▶ Git Fetch
+
+$ cd desktop
+$ mkdir fetchingpulling
+$ cd fetchingpulling
+$ git clone https://github.com/reasonmii/animal.git
+$ cd animal
+
+● Github : Create new files in the branch (not master/main)
+ex) night branch - rabbit.txt
+
+● Check 'night' branch in git
+$ git switch night
+result : Switched to a new branch 'night'
+         Branch 'night' set up to track remote branch 'night' from 'origin'.
+
+$ ls
+result : bat.txt  bear.txt  pets.txt
+-> No 'rabbit.txt' file
+
+$ git fetch origin
+result : remote: Enumerating objects: 4, done.
+         remote: Counting objects: 100% (4/4), done.
+         remote: Compressing objects: 100% (3/3), done.
+         remote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+         Unpacking objects: 100% (3/3), 845 bytes | 32.00 KiB/s, done.
+         From https://github.com/reasonmii/animal
+            162d225..072f82d  night      -> origin/night
+         it
+
+$ git status
+result : On branch night
+         Your branch is behind 'origin/night' by 1 commit, and can be fast-forwarded.
+           (use "git pull" to update your local branch)
+         nothing to commit, working tree clean
+
+$ git checkout origin/night
+$ code .
+-> Now 'rabbit.txt' file is here
+
+● Github : Create new files in the branch ex) night
+$ git switch night
+$ git fetch origin night
+$ git status
+result : On branch night
+         Your branch is behind 'origin/night' by 2 commits, and can be fast-forwarded.
+           (use "git pull" to update your local branch)
+         nothing to commit, working tree clean
+$ git checkout origin/night
+->  Now 'dog.txt' file is here (Git is now updated)
+
+------------------------------------------------------------------------------------------
+
+▶ Git Pull : git pull <remote> <branch>
+Use to retrieve changes from a remote repository
+Unlike fetch, pull actually updates our HEAD branch
+with whatever changes are retrieved from the remote
+"Go and download data from Github
+ AND immediately update my local repo with those changes"
+
+★ git pull = git fetch + git merge
+1) git fetch : update the remote tracking branch with the latest changes
+               from the remote repository
+2) git merge : update my current branch with whatever changes are
+               on the remote tracking branch
+
+To pull, we specify the particular remote and branch we want to pull.
+Just like with git merge, it matters WHERE we run this command from.
+Whatever branch we run it from is where the changes will be merged into.
+"git pull origin master" would fetch the latest information from the origin's master branch
+and merge those changes into our current branch.
+
+★ Pulls can result in merge conflicts!
+
+● Github : Create new files in the branch (not master/main)
+ex) night branch - bird.txt
+
+$ git pull origin night
+
+$ git log --oneline
+result : fa72221 (HEAD, origin/night) Create bird.txt
+         7803488 Create dog.txt
+         072f82d Create rabbit.txt
+         162d225 (night) Rename bat to bat.txt
+         438f722 Create bear.txt
+         e7d0839 Create bat
+         ba220f1 (origin/main, origin/HEAD, main) add names
+         526ac4a more names
+         07daa9b add two more names
+         a5c48e2 Create pets.txt
+
+$ ls
+bat.txt  bear.txt  bird.txt  dog.txt  pets.txt  rabbit.txt
+-> Now, we can see 'bird.txt'
+
+------------------------------------------------------------------------------------------
+
+▶ Pulls can Result in Merge Conflicts!
+
+● Github : Create new files
+ex) food branch - deer.txt
+
+● Git : Create new files with the same name created in 'Github' in the same branch
+$ git switch food
+$ touch deer.txt
+$ git add deer.txt
+$ git commit -m "add my deer art"
+
+$ git pull origin food
+result : remote: Enumerating objects: 4, done.
+         remote: Counting objects: 100% (4/4), done.
+         remote: Compressing objects: 100% (3/3), done.
+         remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+         Unpacking objects: 100% (3/3), 746 bytes | 31.00 KiB/s, done.
+         From https://github.com/reasonmii/animal
+          * branch            food       -> FETCH_HEAD
+            ae6a31b..903119f  food       -> origin/food
+         CONFLICT (add/add): Merge conflict in deer.txt
+         Auto-merging deer.txt
+         Automatic merge failed; fix conflicts and then commit the result.
+-> Conflict occurs!
+
+● Visual Studio Code - 'Accept Both Changes'
+
+$ git add deer.txt
+$ git commit -m "fix merge conflicts"
+$ git status
+result : On branch food
+         Your branch is ahead of 'origin/food' by 2 commits.
+           (use "git push" to publish your local commits)
+-> We need to push up the change to Github
+
+● Push the change to 'Github'
+$ git push origin food
+-> Check Github
+
+------------------------------------------------------------------------------------------
+
+▶ An even Easier Syntax! : git pull
+
+If we run git pull without specifying a particular remote
+or branch to pull from, git assumes the following:
+- remote will default to origin
+- branch will default to whatever tracking connection is configured
+  for your current branch.
+Note: this behavior can be configured, and tracking connections can be changed manually
+Most people don't mess with that stuff
+
+● Github : Create new files
+ex) night branch - wolf.txt
+
+$ git switch night
+$ ls
+result : bat.txt  bear.txt  pets.txt
+
+$ git pull
+result : Updating 162d225..54e6dbf
+         Fast-forward
+          bird.txt   |  3 +++
+          dog.txt    |  4 ++++
+          rabbit.txt | 16 ++++++++++++++++
+          wolf.txt   | 11 +++++++++++
+          4 files changed, 34 insertions(+)
+          create mode 100644 bird.txt
+          create mode 100644 dog.txt
+          create mode 100644 rabbit.txt
+          create mode 100644 wolf.txt
+
+$ ls
+result : bat.txt  bear.txt  bird.txt  dog.txt  pets.txt  rabbit.txt  wolf.txt
+
