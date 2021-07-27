@@ -1,4 +1,18 @@
 
+▶ git fetch
+- Gets changes from remote branch(es)
+- Updates the remote-tracking branches with the new changes
+- Does not merge changes onto your current HEAD branch
+- Safe to do at anytime
+
+▶ git pull
+- Gets changes from remote branch(es)
+- Updates the current branch with the new changes, merging them in
+- Can result in merge conflicts
+- Not recommended if you have uncommitted changes!
+
+------------------------------------------------------------------------------------------
+
 ▶ Remote Tracking Branches : git branch -r
 Use it to view the remote branches our local repository knows about
 
