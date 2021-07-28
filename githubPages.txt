@@ -1,6 +1,24 @@
+▶ Github Pages
+※ https://pages.github.com/
+They are public webpages that are hosted and published via Github
+They allow you to create a website simply by pushing your code to Github
 
-What is Github Pages?
-https://pages.github.com/
+● static sites
+Github Pages is a hosting service for static webpages,
+so it does not support server-side code like Python, Ruby, or Node
+Just HTML/CSS/JS!
+
+● User Site
+You get "one user site" per Github account
+This is where you could host a portfolio site or some form of personal website
+The default url is based on your Github username, following this pattern:
+"username.github.io", though you can change this!
+
+● Project Sites
+You get "unlimited" project sites!
+Each Github repo can have a corresponding hosted website
+It's as simple as telling Github which specific branch contains the web content
+The default urls follow this pattern: "username.github.io/repo-name"
 
 ex1) Faker
 - Repo : https://github.com/Marak/faker.js
@@ -9,5 +27,4 @@ ex1) Faker
 ex2) 2048-AI Repo
 - Repo : https://github.com/ovolve/2048-AI
 - Github Pages : http://ovolve.github.io/2048-AI/
-
 
