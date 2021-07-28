@@ -53,14 +53,193 @@ all new development should be done on separate branches!
 3) Thus, Github would have one "main" branch, which is the original, unchanged
    and many other branches from each user
 
+● Suppose Person1 wants to see Person2's branch
+
+Check any change in Github
+See whether new branch is created or the branch of others changed
+$ git fetch origin
+
+Check other's branch
+$ git branch -r
+$ git checkout origin/<person2-branch-name>
+
+Work on other's branch
+$ git switch -
+$ git switch <person2-branch-name>
+
+$ git status
+$ git add <file-name>
+$ git commit -m "fixed"
+$ git push origin <person2-branch-name>
+
+Go back to my branch
+$ git switch <person1-branch-name>
+
+● Suppose Person2 wants to get the changes from Person1
+$ git pull origin <person2-branch-name>
+
 ------------------------------------------------------------------------------------------
 
+▶ Merging In Feature Branches
+There are a couple of options for how to do this
+1) Merge at will, without any sort of discussion with teammates
+   JUST DO IT WHENEVER YOU WANT.
+2) Send an email or chat message or something to your team
+   to discuss if the changes should be merged in.
+3) Pull Requests!
 
+● Suppose Person1 should merge his branch to 'main' branch
+$ git switch main
+$ git pull origin main
+$ git merge <branch-name>
+$ git status
+$ git push origin main
 
+● Suppose Person2 should merge his branch to 'main' branch
+$ git switch main
+$ git pull origin main
+$ git merge <branch-name>
+$ git status
+$ git push origin main
 
+------------------------------------------------------------------------------------------
 
+▶ Pull Requests
+Pull Requests are a feature built in to products like Github & Bitbucket
+★ They are not native to Git itself
+They allow developers to "alert team-members" to new work that needs to be reviewed
+They provide a mechanism to "approve" or "reject" the work on a given branch
+They also help facilitate discussion and feedback on the specified commits
 
+"I have this new stuff
+ I want to merge in to the master branch...
+ what do you all think about it?"
 
+● The Workflow
+1) Do some work locally on a feature branch
+2) Push up the feature branch to Github
+3) Open a pull request using the feature branch just pushed up to Github
+4) Wait for the PR (Pull Request) to be approved and merged
+   Start a discussion on the PR (This part depends on the team structure)
 
+● Pull Requests discussion in Github example
+https://github.com/facebook/react/pulls
 
+● Mention people for a pull request memo
+@name
+
+● Get the updated branch done by others
+$ git switch main
+$ git branch -D <updated-branch-name>
+-> Delete the branch which you downloaded before it is updated
+$ git branch
+$ git pull origin main
+-> Pull the latest version
+
+------------------------------------------------------------------------------------------
+
+▶ Merging Pull Requests with Conflicts
+Just like any other merge, sometimes there are conflicts
+that need to be resolved when merging a pull request
+
+● Person1
+$ git switch -c new-heading
+$ git add index.html
+$ git commit -m "change heading"
+$ git push origin new-heading
+
+● Person2
+Suppose she changed the 'main' branch's 'index.html' file in Github
+
+● Person1
+1) Click 'Compare & pull request' in Github
+   -> Conflict! 'Can't automatically merge'
+2) Write the message - Create pull request
+
+● Person2
+There's new alarm in 'Pull Request' section
+Click it
+If you want to merge this, click 'command line instructions'
+- See how you can resolve conflicts
+
+$ git fetch origin
+$ git switch new-heading
+※ = $ git checkout -b new-heading origin/new-heading
+
+$ git switch main
+$ git pull origin main
+$ git switch new-heading
+$ git merge main
+-> VSCode pops up : Change manually
+
+$ git add index.html
+$ git commit -m "resolve conflicts"
+$ git status
+
+$ git switch main
+$ git merge --no-ff new-heading
+-> VSCode pops up : close the file
+
+★ --no-ff
+It's an indicator to tell git to not doing "fast-forward"
+Because fast-forward would move git's branch pointer to some new commits
+
+$ git push origin main
+
+Check Github page : 'Pull request successfully merged and closed'
+Click 'Delete Branch'
+※ Click 'Restore Branch' if you needed
+
+● Person1
+Go and get the latest merged version
+$ git switch main
+$ git branch
+$ git branch -D new-heading
+$ git pull origin main
+$ git log --oneline
+
+------------------------------------------------------------------------------------------
+
+▶ Branch Protection Rules
+
+● Person1
+Github Repository - Settings - Branches
+There's a part 'Branch protection rules'
+Click 'Add rule'
+
+● Branch name pattern : main
+※ If you work in big project, they usually set the pattern ex) /release/name
+
+● Protect matching branches
+Require all request reviews before merging : Required approving reviews 1
+- It means at least 1 person should approve the pull request before being merged
+
+● Click 'Create'
+
+● Go Github '<> Code' page edit one of the file in 'main' branch
+Now, you can't commit to main branch, you should make a new branch
+- 'You can't commit to main because it is a protected branch'
+Click 'Commit changes'
+Click 'Create pull request'
+
+Alarm occurs according to the 'Protection rule' you created
+1) Review required
+2) Merging is blocked
+
+● Person2
+'Add your review' - Note comments - Click 'Review changes'
+Click one of them:
+1) Comment
+2) Approve
+3) Request changes
+
+Suppose she clicked 'Approve'
+Click 'Merge pull request'
+Click 'Confirm merge'
+Click 'Delete branch'
+Now, the file is changed!
+
+★ If Person2 is the owner of the project,
+   she can directly merge it by clicking 'Merge pull request'
+   without 'Approving' stage
 
