@@ -1,0 +1,55 @@
+
+▶ Centralized Workflow
+AKA Everyne works on Master/Main
+AKA The Most Basic Workflow Possible
+
+● Problem
+- Lot's of time spent resolving conflicts and merging code,
+  especially as team size scales up
+- No one can work on anything without disturbing the main codebase
+  How do you try adding something radically different in?
+  How do you experiment?
+- The only way to collaborate on a feature together with another teammate
+  is to push incomplete code to master
+  Other teammates now have broken code
+
+Suppose several people work together in "the same Github" repository.
+They "pulled" the 'main' branch at first to their own Git.
+
+● Person1 modified it a lot and "pushed" his changes.
+  Person2 also modified the original file a lot and tried to "push" her changes.
+-> Person2 get [rejected] ERROR!
+   This is because the main branch is not the same as when Person2 pulled it
+   (It is not the newest verson - changed by Person1)
+   ★ Person2 must pull the changed one from Github first, before push her changes
+
+● What Person2 should do
+$ git pull origin main
+result : VSCode pop up -> Close the file
+$ git status
+$ git push origin main
+
+● Suppose Person1 edited the file again, which is the version not edited by Person2
+  and he tried to pull the 'main' branch from Github
+$ git pull origin main
+-> ERROR! : Local changes to the following files would be overwritten by merge
+$ git stash
+$ git pull origin main
+-> result : now he can pull the newest version of file edited by Person2
+
+------------------------------------------------------------------------------------------
+
+▶ Feature Branch Workflow
+Rather than working directly on master/main,
+all new development should be done on separate branches!
+- Treat master/main branch as the official project history
+- Multiple teammates can collaborate on a single feature
+  and share code back and forth without pulling the master/main branch
+- Master/main branch won't contain broken code
+  (or at least, it won't unless someone messes up)
+
+
+
+
+
+
