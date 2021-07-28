@@ -1,0 +1,13 @@
+
+What is Github Pages?
+https://pages.github.com/
+
+ex1) Faker
+- Repo : https://github.com/Marak/faker.js
+- Github Pages : http://marak.github.io/faker.js/
+
+ex2) 2048-AI Repo
+- Repo : https://github.com/ovolve/2048-AI
+- Github Pages : http://ovolve.github.io/2048-AI/
+
+
