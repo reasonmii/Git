@@ -1,0 +1,186 @@
+▶ Rebasing : git rebase <branch-name>
+※ https://git-scm.com/docs/git-rebase
+
+● Two main reasons to use the git rebase command
+1) as an alternative to "merging"
+2) as a "cleanup" tool (clean history)
+
+● Two ways for Rebasing
+1) We can move the entire <new-branch>'s commits,
+   so that it BEGINS at the tip of the master branch
+   All of the work is still there, but we have "re-written history"
+2) We can also wait until we are done with a <new-branch>
+   and then rebase the <new-branch> onto the master branch
+
+● Why Rebase?
+- We get a much cleaner project history
+- No unnecessary merge commits!
+- We end up with a linear project history
+
+------------------------------------------------------------------------------------------
+
+▶ Setup & Merging : Original way
+
+$ cd desktop
+$ mkdir rebaseprj
+$ cd rebaseprj
+$ git init
+$ touch website.txt
+$ git add website.txt
+$ git commit -m "initial commit"
+$ code .
+
+● Edit the file 'website.txt' in 'master' branch
+$ git commit -am "add navbar"
+
+● Create new branch 'feat'
+$ git switch -c feat
+$ touch feature.txt
+$ git status
+$ git add feature.txt
+$ git commit -m "begin feature"
+
+● Edit the file 'feature.txt' in 'feat' branch
+$ git commit -am "work on feature"
+
+● Edit the file 'website.txt' in 'master' branch
+$ git switch master
+$ git commit -am "edit website.txt"
+
+● Merge branch
+$ git switch feat
+$ git merge master
+-> VSCode pops up : close the file
+
+$ git log --oneline
+result : 991bfe1 (HEAD -> feat) Merge branch 'master' into feat
+         f60256b (master) edit website.txt
+         9170577 work on feature
+         a99bb05 begin feature
+         058a1fa add navbar
+         7b5e915 initial commit
+
+● Edit the file 'feature.txt' in 'feat' branch
+$ git commit -am "more work on feature"
+
+● Edit the file 'website.txt' in 'master' branch
+$ git switch master
+$ git commit -am "add login form"
+
+● Merge branch
+$ git switch feat
+$ git merge master
+$ git log --oneline
+result : a662f7 (HEAD -> feat) Merge branch 'master' into feat
+         f81bb87 (master) add login form
+         d993c54 more work on feature
+         991bfe1 Merge branch 'master' into feat
+         f60256b edit website.txt
+         9170577 work on feature
+         a99bb05 begin feature
+         058a1fa add navbar
+         7b5e915 initial commit
+
+------------------------------------------------------------------------------------------
+
+▶ Actually Rebasing : Cleaner way
+
+● Merge branch with 'Rebase'
+※ You're in 'feat' branch
+$ git rebase master
+result : Successfully rebased and updated refs/heads/feat.
+
+● Check GitKraken
+The structure is changed, they are "linear"
+But, all of the working histories are still there
+4 'master' commits -> 3 'feat' commits
+
+$ git branch
+result : * feat
+           master
+
+$ git log --oneline
+result : 24876f4 (HEAD -> feat) more work on feature
+         2296d08 work on feature
+         43f36b0 begin feature
+         f81bb87 (master) add login form
+         f60256b edit website.txt
+         058a1fa add navbar
+         7b5e915 initial commit
+-> It's simpler
+   Check 3 comments we did on the 'feature' branch
+   Their commit hashes are changed
+   = "re-written history"
+   ★ It's not an updated one, but it's new history
+   However, 'master' commits' hashes are unchanged
+
+● Edit the file 'website.txt' in 'master' branch
+$ git switch master
+$ git commit -am "add image"
+
+● Check GitKraken
+It's diverged again
+4 'master' commits -> 3 'feat' commits -> 1 'master' commit
+
+● Merge branch with 'Rebase'
+$ git switch feat
+$ git diff feat..master
+$ git rebase master
+
+● Check GitKraken
+It's diverged again
+5 'master' commits -> 3 'feat' commits
+
+------------------------------------------------------------------------------------------
+
+▶ The Golden Rule : When NOT to Rebase
+
+★ WARNING!
+"Never rebase" commits that have been "shared with others"
+If you have already pushed commits up to Github,
+DO NOT rebase them unless you are positive no one on the team is using those commits
+
+SERIOUSLY!
+You do not want to rewrite any git history that other people already have
+It's a pain to reconcile the alternate histories!
+
+★ It's fine to code 'git rebase master'
+   Do not code 'git rebase <other-branches>'
+
+------------------------------------------------------------------------------------------
+
+▶ Handling Conflicts & Rebasing
+
+● Edit the file 'website.txt' in 'feat' branch
+$ git commit -am "update website on feat"
+
+● Edit the file 'website.txt' in 'master' branch
+$ git switch master
+$ git commit -am "update website"
+
+● Edit the file 'feature.txt' in 'feat' branch
+$ git switch feat
+$ git commit -am "more work on feature.txt"
+
+● Merge branch with 'Rebase'
+$ git rebase master
+result : error: could not apply 985dc2c... update website on feat
+         Resolve all conflicts manually, mark them as resolved with
+         "git add/rm <conflicted_files>", then run "git rebase --continue".
+         You can instead skip this commit: run "git rebase --skip".
+         To abort and get back to the state before "git rebase", run "git rebase --abort".
+         Could not apply 985dc2c... update website on feat
+         Auto-merging website.txt
+         CONFLICT (content): Merge conflict in website.txt
+-> ERROR!
+
+● VS Code pops up
+Manually Edit or Click what you want to do to resolve the conflict
+
+$ git add website.txt
+$ git rebase --continue
+-> VS Code pops up : Close the file
+
+● Check GitKraken
+The structure is changed, they are "linear"
+
