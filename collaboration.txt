@@ -1,4 +1,3 @@
-
 ▶ Centralized Workflow
 AKA Everyne works on Master/Main
 AKA The Most Basic Workflow Possible
@@ -47,6 +46,18 @@ all new development should be done on separate branches!
   and share code back and forth without pulling the master/main branch
 - Master/main branch won't contain broken code
   (or at least, it won't unless someone messes up)
+
+1) Each user should create their own branch
+2) Push that branch to Github to share and get feedback with others
+   git push origin <branch-name>
+3) Thus, Github would have one "main" branch, which is the original, unchanged
+   and many other branches from each user
+
+------------------------------------------------------------------------------------------
+
+
+
+
 
 
 
