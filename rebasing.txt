@@ -184,3 +184,118 @@ $ git rebase --continue
 ● Check GitKraken
 The structure is changed, they are "linear"
 
+------------------------------------------------------------------------------------------
+
+▶ Interactive Rebase : git rebase -i HEAD~4
+Running git rebase with the '-i' option will enter the interactive mode,
+which allows us to edit commits, add files, drop commits, etc
+★ Note that we need to specify "how far back we want to rewrite commits"
+Also, notice that we are not rebasing onto another branch
+Instead, we are rebasing a series of commits onto the HEAD they currently are based on
+
+● Check current commits
+$ git log --oneline
+
+● Create a new branch
+$ git switch -c my-feat
+
+● Suppose we should go back 9 commits out of 10 commits
+  So, we should go 9 commits back
+$ git rebase -i HEAD~9
+-> VSCode pops up
+
+● Visual Studio Code
+We can see 1~9 commits
+Find the commit you want to change, edit the command from 'pick' to 'reword'
+-> Close the file
+-> Another VSCode pops up
+
+Edit the commit message
+ex) "I added project file" -> "Add project file"
+-> Close the file
+
+● Check the changed commit message
+$ git status
+$ git log --oneline
+-> 1~9 commits have new hash
+   If the parent commit changed,
+   every afterward commits changed also
+
+------------------------------------------------------------------------------------------
+
+▶ Fixing Up & Squashing Commits with Interactive Rebase
+Fixup uses commit contents
+but meld it into previous commit and discard the commit message
+
+Suppose you did 2 times of commits, because you missed something at the first
+They should be combined actually
+
+$ git log --oneline
+$ git rebase -i HEAD~9
+-> VSCode pops up
+
+● Visual Studio Code
+Find the commit you want to combine, edit the command from 'pick' to 'fixup'
+ex) pick 21acd17 add bootstrap
+    fixup 4c6cb28 whoops forgot to add bootstrap js script
+-> The lower one would be combined to the upper one
+   The 'fixup' message would be gone
+-> Close the file
+
+● Check the changed commit message
+$ git status
+$ git log --oneline
+-> 1~9 commits have new hash
+   If the parent commit changed,
+   every afterward commits changed also
+
+▶ How to Combine Three Commits
+
+$ git rebase -i HEAD~8
+-> VSCode pops up
+
+● Visual Studio Code
+Find the commit you want to combine, edit the command from 'pick' to 'fixup'
+ex) pick de10e00 add top navbar
+    fixup 507cf59 fix navbar types
+    fixup e4f2eac fix another navbar typo
+-> Both of them would be smashed into the previous commit
+   The 'fixup' message would be gone
+-> Close the file
+
+● Check the changed commit message
+$ git status
+$ git log --oneline
+
+------------------------------------------------------------------------------------------
+
+▶ Dropping Commits with Interactive Rebase
+Drop removes commit
+The entire commit messages and its changes
+
+$ git log --oneline
+$ git rebase -i HEAD~2
+-> VSCode pops up
+
+● Visual Studio Code
+Find the commit you want to remove, edit the command from 'pick' to 'drop'
+-> Close the file
+
+● Check the changed commit message
+$ git log --oneline
+$ git commit --amend
+-> VSCode pops up
+   It opens up the most recent commit
+   We can edit the message
+-> Close the file
+
+$ git log --oneline
+
+------------------------------------------------------------------------------------------
+
+▶ 'main' Branch's Log
+It contains all the fixup, drop, etc.
+
+$ git switch main
+$ git log --oneline
+
