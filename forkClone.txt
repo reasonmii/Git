@@ -1,0 +1,100 @@
+▶ Forking
+Github (and similar tools) allow us
+to create personal copies of other peoples' repositories
+We call those copies a "fork" of the original
+When we fork a repo, we're basically asking Github
+"Make me my own copy of this repo please"
+※ As with pull requests, forking is not a Git feature
+   The ability to fork is implemented by Github
+
+● Suppose you go into the repo, which is not yours. You want a copy!
+In Github, you can see the 'Fork' button on the right upper side
+Click it
+Now you have your very own copy in your Github!
+
+------------------------------------------------------------------------------------------
+
+▶ Example 
+
+● Suppose we forked 'https://github.com/gabrielecirulli/2048'
+Now you can see '2048' repository in your Github
+Copy the repository's url (code)
+Clone it down to your machine
+
+$ git clone git@github.com:reasonmii/2048.git
+$ cd 2048
+$ git status
+$ ls
+$ git log --oneline
+$ git remote -v
+result : origin  git@github.com:reasonmii/2048.git (fetch)
+         origin  git@github.com:reasonmii/2048.git (push)
+-> You can see that the origin is set to your own fork
+
+● Edit the file
+$ git add .
+$ git commit -m "change color palette"
+$ git remote -v
+$ git push origin master
+
+------------------------------------------------------------------------------------------
+
+▶ Fork & Clone Workflow
+1) Fork the Original Project
+2) Clone the Fork
+3) Add Upstream remote
+4) Do some work
+5) Push to origin
+6) Open PR (Pull Request)
+
+● Person1
+Create a new repository 'fork-and-clone' in Github
+Create a file 'README.md'
+-> This is the original repository
+
+● Person2
+Go look at Person1's repository
+Fork 'fork-and-clone' repository
+Copy the url code in your Github
+
+$ git clone git@github.com:Person2/fork-and-clone.git
+$ cd fork-and-clone
+$ git log --oneline
+$ git remote -v
+
+We should also get changes from the original project repository
+Go to the Person1's repository
+Copy the url code
+
+We'll call this upstream
+※ It's a traditional way to call the original repository
+$ git remote add upstream https://github.com/Person1/fork-and-clone.git
+$ git remote -v
+
+● Person1
+Edit 'README.md' file
+
+● Person2
+$ git status
+$ git pull upstream main
+$ git log --oneline
+
+Edit 'README.md' file
+$ git add README.md
+$ git commit -m "add favorite ice cream"
+
+$ git remote -v
+$ git push origin main
+
+To merge changed file to the original file of Person1
+Click 'Pull request' in Github1
+Click 'Create pull request'
+Write memo - Click 'Create pull request'
+
+● Person1
+Go to 'Pull requests' page in Github
+Check Person2's pull request
+Click 'Merge pull request' - Click 'Confirm merge'
+
+Now, Person1 merged the changes of Person2 to his original file
+
