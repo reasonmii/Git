@@ -61,18 +61,32 @@ you can see that 'showmebranches = branch' is added in the 'alias' part
 
 ▶ Aliases with Arguments
 
+● Edit 'config' file
+ex) C:\Users\User\Desktop\RoadtripPlaylist\.git - Click the file 'config'
+Add the things below:
+[alias]
+        s = status
+        l = log
+        cm = commit -m
+        a = add
 
+● Git Bash
+$ git s
+$ touch new.js
+$ git a new.js
+$ git cm "my new commit!"
+$ git l --oneline
 
 ------------------------------------------------------------------------------------------
 
 ▶ Exploring Existing Useful Aliases Online
 
-Git Alias Github Repo
+1) Git Alias Github Repo
 https://github.com/GitAlias/gitalias
 
-Must Have Git Aliases Blog Post
+2) Must Have Git Aliases Blog Post
 https://www.durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
 
-The Ultimate Git Alias Setup
+3) The Ultimate Git Alias Setup
 https://gist.github.com/mwhite/6887990
 
