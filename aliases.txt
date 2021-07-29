@@ -1,0 +1,78 @@
+▶ Global Git Config File
+Git looks for the global config file at
+either "~/.gitconfig" or "~/.config/git/config"
+Any configuration variables that we change in the file will be applied across all Git repos
+We can also alter configuration variables from the command line if preferred
+
+● Alter configuartion variables from the command line
+$ git config --global user.name
+$ git config --global user.email
+
+● Check the setting
+$ cat ~/.gitconfig
+result : [filter "lfs"]
+                 clean = git-lfs clean -- %f
+                 smudge = git-lfs smudge -- %f
+                 process = git-lfs filter-process
+                 required = true
+         [user]
+                 name = Yuna
+                 email = cdyn17@gmail.com
+         [core]
+                 editor = code --wait
+
+● You can change the setting by opening the file and change it manually
+ex) C:\Users\User\Desktop\RoadtripPlaylist\.git - Click the file 'config'
+
+------------------------------------------------------------------------------------------
+
+▶ Adding Aliases in 'config' file
+We can easily set up Git aliases to make our Git experience a bit simpler and faster
+For example, we could define an alias "git ci" instead of having to type "git commit"
+Or, we could define a custom "git lg" command
+that prints out a custom formatted commit log
+
+● Edit 'config' file
+ex) C:\Users\User\Desktop\RoadtripPlaylist\.git - Click the file 'config'
+Add the things below:
+[alias]
+        s = status
+        l = log
+
+● Check whether the Aliases you made work
+$ git s
+-> This works as the same as the "git status"
+
+$ git l
+-> This works as the same as the "git log"
+
+------------------------------------------------------------------------------------------
+
+▶ Setting Aliases from the Command : git config --global alias.<new-name> <original>
+
+$ git config --global alias.showmebranches branch
+$ git showmebranches
+-> This works as the same as the "git branch"
+
+If you check the 'config' file,
+you can see that 'showmebranches = branch' is added in the 'alias' part
+
+------------------------------------------------------------------------------------------
+
+▶ Aliases with Arguments
+
+
+
+------------------------------------------------------------------------------------------
+
+▶ Exploring Existing Useful Aliases Online
+
+Git Alias Github Repo
+https://github.com/GitAlias/gitalias
+
+Must Have Git Aliases Blog Post
+https://www.durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
+
+The Ultimate Git Alias Setup
+https://gist.github.com/mwhite/6887990
+
