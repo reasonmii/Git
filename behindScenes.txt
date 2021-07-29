@@ -4,6 +4,12 @@ $ ls .git
 result : COMMIT_EDITMSG  ORIG_HEAD  description  index  logs/     packed-refs
          HEAD            config     hooks/       info/  objects/  refs/
 
+▶ 4 Types of Git Objects
+- commit
+- tree
+- blob
+- annotated tag
+
 ------------------------------------------------------------------------------------------
 
 ▶ Config File
@@ -170,7 +176,6 @@ result : hi
 
 $ git cat-file -p dd7e1
 result : goodbye
-
 
 ● Create a new file
 $ touch dogs.txt
