@@ -237,7 +237,6 @@ result : hint: Waiting for your editor to close the file...
           4 files changed, 7 insertions(+), 2 deletions(-)
 
 ------------------------------------------------------------------------------------------
-★★★ 수정필요 : 39번째 강의 npm이 안됨
 
 ▶ Git Ignore
 ※ https://git-scm.com/docs/gitignore
@@ -264,23 +263,47 @@ ex1) Faker Github Repo : https://github.com/marak/Faker.js/
 ex2) Tensorflow Github Repo : https://github.com/tensorflow/tensorflow
 ex3) Signal Github Repo : https://github.com/signalapp/Signal-Android
 
+● Create new files
+$ touch dog.txt
+$ touch secrets.txt
+
+● Edit the file 'dog.txt'
+$ code .
+$ git add dog.txt
+$ git commit -m "start project"
+$ git status
+
+● Edit the file 'dog.txt'
+$ git add dog.txt
+$ git commit -m "add new feature"
+$ git status
+-> 'secrets.txt' is still in untracked files part
+
+● To ignore 'secrets.txt', create '.gitignore'
 $ touch .gitignore
 
-Open '.gitignore' in Visual Studio Code
-Write things as below:
+● Open '.gitignore' in Visual Studio Code,
+  and write the things you want to ignore as below:
 .DS_Store
 secrets.txt
 node_modules/
--> This means ignore thos files or folders' change
+-> This means ignore those files or folders
 
+● Check whether the file is ignored, using 'git status'
+$ git status
+result : On branch master
+         Untracked files:
+           (use "git add <file>..." to include in what will be committed)
+                 .gitignore
+         nothing added to commit but untracked files present (use "git add" to track)
+-> We can't see 'secrets.txt' file in untracked files part anymore
+
+● Commit
 $ git add .
 $ git commit -m "add gitignore file" 
 
-Now let's edit "secrets.txt"
-$ git status
-result : On branch master
-         nothing to commit, working tree clean
--> It ignores changes
+★ Now, Git would ignore any cahnge of 'secrets.txt' file
+Edit the secrets file -> code 'git status' -> Nothing happens
 
 ------------------------------------------------------------------------------------------
 
