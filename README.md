@@ -24,9 +24,17 @@ Git, Github, Git Immersion
 - 종료 keyword : close, closes, closed, fix, fixes, fixed, resolve, resolves, resolved
 - ex) `git commit -m "fixed XSS Vulnerability - #20"`
 - 여러 개 이슈 모두 종료하기 : `git commit -m "fixed XSS Vulnerability - #20", #21, #23`
-- 다른 repository의 이슈 종료하기 : `git commit -m "close issue #21 #22 and [other_repo_path]#10"
+- 다른 repository의 이슈 종료하기 : `git commit -m "close issue #21 #22 and [other_repo_path]#10"`
 
 <b>.gitignore</b>
 - git push 하고 싶지 않은 파일명들 입력
 - 작업 중인 파일을 전부 github에 업로드 하면 용량이 크니, 특정 파일들은 업로드 하지 않기 위함
 
+<b>issue</b>
+- Assignees : 해당 작업의 담당자
+- Labels: 해당 작업의 성격
+- Milestone: 해당 작업이 속한 파트
+- Milestone에 간단하게 설명해 드리면 이번 출시 버전이 1.0.0 일 경우 해당 버전이든 이슈(작업) 기능 강화, 새 기능추가, 버그 기타 등등 모든 이슈를 Version 1.0.0 Milestone이라는 항목에 추가하면 위 그림처럼 Version 1.0.0에 대한 전체적인 상황을 한눈에 볼 수가 있는 장점이 있습니다
+https://cheese10yun.github.io/github-proejct/
+- receiver : 교수님, 다른 담당자
+- 호출하기 : `@이름`
