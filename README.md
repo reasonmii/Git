@@ -20,8 +20,11 @@ Git, Github, Git Immersion
   - issue tracker id 작성할 때 사용
 
 <b>git commit으로 issue 종료하기</b>
-- 코드 반영을 위해 commit 하는 과정에서 특정 keyword, issue number 같이 기입하면 자동으로 issue에 대한 처리도 진행됨
-- https://www.hahwul.com/2018/07/27/closing-git-issue-with-commit/
+- commit message에 종료 keyword, issue no. 기입하면 push 할 때 해당 이슈 자동으로 종료 처리
+- 종료 keyword : close, closes, closed, fix, fixes, fixed, resolve, resolves, resolved
+- ex) `git commit -m "fixed XSS Vulnerability - #20"`
+- 여러 개 이슈 모두 종료하기 : `git commit -m "fixed XSS Vulnerability - #20", #21, #23`
+- 다른 repository의 이슈 종료하기 : `git commit -m "close issue #21 #22 and [other_repo_path]#10"
 
 <b>.gitignore</b>
 - git push 하고 싶지 않은 파일명들 입력
