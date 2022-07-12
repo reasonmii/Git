@@ -1,4 +1,4 @@
-Git, Github, Git Immersion
+### Git, Github, Git Immersion
 - github is where you can collaborate with others
 
 <b>git commit message convention</b>
@@ -31,10 +31,20 @@ Git, Github, Git Immersion
 - 작업 중인 파일을 전부 github에 업로드 하면 용량이 크니, 특정 파일들은 업로드 하지 않기 위함
 
 <b>issue</b>
-- Assignees : 해당 작업의 담당자
-- Labels: 해당 작업의 성격
-- Milestone: 해당 작업이 속한 파트
-- Milestone에 간단하게 설명해 드리면 이번 출시 버전이 1.0.0 일 경우 해당 버전이든 이슈(작업) 기능 강화, 새 기능추가, 버그 기타 등등 모든 이슈를 Version 1.0.0 Milestone이라는 항목에 추가하면 위 그림처럼 Version 1.0.0에 대한 전체적인 상황을 한눈에 볼 수가 있는 장점이 있습니다
+- issue : 추가사항, 개선사항, 버그 등 모든 것
+  - 모든 활동 내역에 대해 이슈를 등록하고 이를 기반으로 작업 진행
+  - `@이름`을 통해 특정 인물 호출 가능
+- issue template : 자주 사용하는 template은 등록하고 사용하는 것이 효율적
+- issue 작업
+  - Assignees : 해당 작업의 담당자
+  - receiver : 교수님, 다른 담당자
+  - Labels: 해당 작업의 성격 ex) enhancement
+  - Milestone: 해당 작업이 속한 파트
+    - ex) 새로운 버전 (1.0.0) 출시 시 추가된 모든 이슈를 Version 1.0.0 Milestone에 추가하면 Version 1.0.0에 대한 전체적인 상황을 한눈에 볼 수 있음
+- issue 기반 branch 생성
+  - branch naming에 작업 의도를 모두 담기는 한계가 있음 + 동료 개발자들의 업무를 유추하기 어려움
+  - → 'issue number' 기반으로 branch를 생성하면 명확해짐
+    - 각 github issue는 unique한 issue number 갖고, 이를 기반으로 branch 이름 생성하여, branch가 명확한 작업 의도를 갖게 할 수 있음
+
+
 https://cheese10yun.github.io/github-proejct/
-- receiver : 교수님, 다른 담당자
-- 호출하기 : `@이름`
