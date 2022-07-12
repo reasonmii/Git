@@ -37,14 +37,26 @@
 - issue template : 자주 사용하는 template은 등록하고 사용하는 것이 효율적
 - issue 작업
   - Assignees : 해당 작업의 담당자
-  - receiver : 교수님, 다른 담당자
   - Labels: 해당 작업의 성격 ex) enhancement
   - Milestone: 해당 작업이 속한 파트
     - ex) 새로운 버전 (1.0.0) 출시 시 추가된 모든 이슈를 Version 1.0.0 Milestone에 추가하면 Version 1.0.0에 대한 전체적인 상황을 한눈에 볼 수 있음
 - issue 기반 branch 생성
-  - branch naming에 작업 의도를 모두 담기는 한계가 있음 + 동료 개발자들의 업무를 유추하기 어려움
-  - → 'issue number' 기반으로 branch를 생성하면 명확해짐
+  - branch naming의 한계 : 작업 의도를 모두 담기 어려움 + 동료 개발자들의 업무를 유추하기 어려움
+  - → 'issue number' 기반으로 branch 생성하면 명확해짐
     - 각 github issue는 unique한 issue number 갖고, 이를 기반으로 branch 이름 생성하여, branch가 명확한 작업 의도를 갖게 할 수 있음
-
-
-https://cheese10yun.github.io/github-proejct/
+- github pull request (pr)
+  - reviewers 지정 (교수님, 다른 담당자 등)
+  - description 작성
+    - keyword: #issueNo.
+    - [] blabla1
+    - [] blabla2
+    - [] blabla3
+  - keyword 예시
+    - issue : 아직 issue인 상태
+    - resolved : 해당 pull request가 master branch에 반영되면 자동으로 close
+  - pull request가 생성되면 새로운 issue number 생성됨 = pull request도 issue의 일종
+  - ★ 반드시 해당 pull request가 어떤 issue에 따른 요청인지 명시하는 것 권장
+    - #2[pull request]가 연결되어 해당 issue가 어떤 code 때문에 진행됐는지 추적하기 좋음
+  - code review : Approve (승인), Comment (간단한 피드백 제출), Request changes (코드 수정 요구)
+  - approve 후 `merge pull request` 버튼을 통해 pull request 반영
+    - 완료 후 해당 branch가 더 필요 없으면 delete branch (remote branch 삭제됨)
