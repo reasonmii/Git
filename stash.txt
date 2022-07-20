@@ -20,15 +20,13 @@ and stash them, reverting the changes in your working copy.
 
 ------------------------------------------------------------------------------------------
 
-```
-cd desktop
-mkdir Stashing
-cd Stashing
-git init
-touch index.html app.css
-```
+$ cd desktop
+$ mkdir Stashing
+$ cd Stashing
+$ git init
+$ touch index.html app.css
 
-`git status`
+$ git status
 result : On branch master
          No commits yet
          Untracked files:
@@ -37,10 +35,8 @@ result : On branch master
                  index.html
          nothing added to commit but untracked files present (use "git add" to track)
 
-```
-git add .
-git commit -m "create index.html and app.css"
-```
+$ git add .
+$ git commit -m "create index.html and app.css"
 
 ------------------------------------------------------------------------------------------
 
