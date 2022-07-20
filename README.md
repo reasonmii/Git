@@ -60,3 +60,7 @@
   - code review : Approve (승인), Comment (간단한 피드백 제출), Request changes (코드 수정 요구)
   - approve 후 `merge pull request` 버튼을 통해 pull request 반영
     - 완료 후 해당 branch가 더 필요 없으면 delete branch (remote branch 삭제됨)
+
+<b>Gists</b>
+- Github Gists are a simple way to share code snippets and useful fragments with others
+- Gists are much easier to create, but offer far fewer features than a typical Github repository
