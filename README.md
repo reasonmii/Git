@@ -31,8 +31,8 @@
 - 작업 중인 파일을 전부 github에 업로드 하면 용량이 크니, 특정 파일들은 업로드 하지 않기 위함
 
 <b>issue</b>
-- issue : 추가사항, 개선사항, 버그 등 모든 것
-  - 모든 활동 내역에 대해 이슈를 등록하고 이를 기반으로 작업 진행
+- issue : 추가/개선사항, 버그 등 모든 것
+  - 모든 활동 내역에 대해 이슈 등록, 이를 기반으로 작업 진행
   - `@이름`을 통해 특정 인물 호출 가능
 - issue template : 자주 사용하는 template은 등록하고 사용하는 것이 효율적
 - issue 작업
@@ -48,9 +48,9 @@
   - reviewers 지정 (교수님, 다른 담당자 등)
   - description 작성
     - keyword: #issueNo.
-    - [] blabla1
-    - [] blabla2
-    - [] blabla3
+    - [ ] blabla1
+    - [x] blabla2
+    - [ ] blabla3
   - keyword 예시
     - issue : 아직 issue인 상태
     - resolved : 해당 pull request가 master branch에 반영되면 자동으로 close
