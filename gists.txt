@@ -1,2 +1,0 @@
-Github Gists are a simple way to share code snippets and useful fragments with others
-Gists are much easier to create, but offer far fewer features than a typical Github repository
