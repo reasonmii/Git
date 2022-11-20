@@ -1,3 +1,14 @@
+### Main code
+
+- git으로 push 할 폴더에서 `git init`
+
+```
+git add --all
+git commit -m "commit message"
+git remote add origin "원격저장소 https"
+git push origin main
+```
+
 ### Git, Github, Git Immersion
 - github is where you can collaborate with others
 
