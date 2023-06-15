@@ -3,6 +3,9 @@
 - git으로 push 할 폴더에서 `git init`
 
 ```
+git fetch
+git switch branch-name
+
 git add --all
 git commit -m "commit message"
 git remote add origin "원격저장소 https"
