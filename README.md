@@ -10,6 +10,7 @@ git add --all
 git commit -m "commit message"
 git remote add origin "원격저장소 https"
 git push origin main
+git push -f origin main
 ```
 
 ### Git, Github, Git Immersion
