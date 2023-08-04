@@ -12,7 +12,7 @@ git remote add origin "원격저장소 https"
 git push origin main
 git push -f origin main
 
-git clone --branch Intern-Yuna https://gecgithub01.walmart.com/SOA/ftk-cyborg.git 
+git clone --branch <branch-name> https://원격저장소
 ```
 
 ### Git, Github, Git Immersion
